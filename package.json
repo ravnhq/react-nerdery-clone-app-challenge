@@ -20,6 +20,7 @@
     "@spotify/eslint-config-react": "^14.1.6",
     "@spotify/eslint-config-typescript": "^14.1.6",
     "@spotify/prettier-config": "^14.1.6",
+    "@testing-library/react": "^14.0.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
