@@ -2,7 +2,7 @@
     "compilerOptions": {
         "baseUrl": "./src",
         "target": "ESNext",
-        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "lib": ["DOM", "DOM.Iterable", "ESNext", "WebWorker"],
         "module": "ESNext",
         "skipLibCheck": true,
 
