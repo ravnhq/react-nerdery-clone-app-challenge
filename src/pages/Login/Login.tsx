@@ -1,3 +1,7 @@
+import { ErrorLabel } from '../../components/Styles/ErrorLabel.styles';
+import { StyledForm } from '../../components/Styles/Form.styles';
+import { StyledInput } from '../../components/Styles/Input.styles';
+import { StyledLabel } from '../../components/Styles/Label.styles';
 import React from 'react';
 import { Resolver, useForm } from 'react-hook-form';
 
@@ -34,32 +38,36 @@ const Login: React.FunctionComponent = () => {
     const onSubmit = (data: FormValues) => console.log(data);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
             <h1>Log in to Spotify</h1>
 
             <span>
-                <label htmlFor="username">Email or username</label>
-                <input
+                <StyledLabel htmlFor="username">Email or username</StyledLabel>
+                <StyledInput
                     id="username"
                     type="text"
                     placeholder="Email or username"
                     {...register('email', {})}
                 />
-                {errors?.email && <p>{errors.email.message}</p>}
+                {errors?.email && (
+                    <ErrorLabel>{errors.email.message}</ErrorLabel>
+                )}
             </span>
             <span>
-                <label htmlFor="password">Password</label>
-                <input
+                <StyledLabel htmlFor="password">Password</StyledLabel>
+                <StyledInput
                     id="password"
                     type="password"
                     placeholder="Password"
                     {...register('password', {})}
                 />
-                {errors?.password && <p>{errors.password.message}</p>}
+                {errors?.password && (
+                    <ErrorLabel>{errors.password.message}</ErrorLabel>
+                )}
             </span>
 
             <button type="submit">Log In</button>
-        </form>
+        </StyledForm>
     );
 };
 
