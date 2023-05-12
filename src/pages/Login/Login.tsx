@@ -1,3 +1,4 @@
+import { StyledButton } from '../../components/Styles/Button.styles';
 import { ErrorLabel } from '../../components/Styles/ErrorLabel.styles';
 import { StyledForm } from '../../components/Styles/Form.styles';
 import { StyledInput } from '../../components/Styles/Input.styles';
@@ -66,7 +67,7 @@ const Login: React.FunctionComponent = () => {
                 )}
             </span>
 
-            <button type="submit">Log In</button>
+            <StyledButton type="submit">Log In</StyledButton>
         </StyledForm>
     );
 };
