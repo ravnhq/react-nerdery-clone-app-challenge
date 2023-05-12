@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledInput = styled.input`
-    color: #707070;
+    color: white;
+    font-family: sans-serif;
     background-color: #121212;
     width: 324px;
     border: none;

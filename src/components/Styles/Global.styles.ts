@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 const StyledGlobal = createGlobalStyle`
     @font-face {
         font-family: 'Gotham';
-        src: url('/fonts/Gotham.woff');
+        src: url('/fonts/Gotham.woff') format('woff')
     }
 
     button {

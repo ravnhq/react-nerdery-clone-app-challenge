@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledButton = styled.button`
-    background-color: #1ed760;
+    background-color: ${({ theme }) => theme.colors.accent};
     width: 324px;
     border-radius: 500px;
     font-weight: 700;
@@ -13,6 +13,7 @@ export const StyledButton = styled.button`
     align-items: center;
     justify-content: center;
     padding-top: 10px;
+    font-family: 'Gotham';
 
     &:hover {
         transform: scale(1.1);
