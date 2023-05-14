@@ -8,7 +8,7 @@ import {
     Switch,
     SwitchInput,
 } from '../../components/Styles/Toggle.styles';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
 import { StyledHeader } from '../../components/Styles/Header.styles';
 import { ErrorMessage } from '../../components/ErrorMessage';
@@ -58,7 +58,7 @@ const Login: React.FunctionComponent = () => {
             <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <h1>Log in to Spotify</h1>
                 <div>
-                    <span>
+                    <div>
                         <StyledLabel htmlFor="email">
                             Email or username
                         </StyledLabel>
@@ -74,8 +74,8 @@ const Login: React.FunctionComponent = () => {
                                 message={errors.email.message || ''}
                             />
                         )}
-                    </span>
-                    <span>
+                    </div>
+                    <div>
                         <StyledLabel htmlFor="password">Password</StyledLabel>
                         <StyledInput
                             data-errors={errors.password !== undefined}
@@ -89,7 +89,7 @@ const Login: React.FunctionComponent = () => {
                                 message={errors.password.message || ''}
                             />
                         )}
-                    </span>
+                    </div>
                     <SwitchLabel htmlFor="remember_me">
                         <SwitchInput
                             id="remember_me"
