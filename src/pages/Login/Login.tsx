@@ -8,7 +8,7 @@ import {
     Switch,
     SwitchInput,
 } from '../../components/Styles/Toggle.styles';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
 import { StyledHeader } from '../../components/Styles/Header.styles';
 import { ErrorMessage } from '../../components/ErrorMessage';
@@ -42,6 +42,8 @@ const Login: React.FunctionComponent = () => {
         register,
         handleSubmit,
         formState: { errors },
+        setValue,
+        getValues,
     } = useForm<FormValues>({
         resolver,
         defaultValues: {
@@ -49,6 +51,12 @@ const Login: React.FunctionComponent = () => {
         },
     });
     const onSubmit = (data: FormValues) => console.log(data);
+
+    const manualToggle = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.code !== 'Space') return;
+
+        setValue('remember_me', !getValues('remember_me'));
+    };
 
     return (
         <>
@@ -96,7 +104,7 @@ const Login: React.FunctionComponent = () => {
                             type="checkbox"
                             {...register('remember_me')}
                         />
-                        <Switch />
+                        <Switch tabIndex={0} onKeyDown={manualToggle} />
                         <span>Remember Me</span>
                     </SwitchLabel>
                     <StyledButton type="submit">Log In</StyledButton>
