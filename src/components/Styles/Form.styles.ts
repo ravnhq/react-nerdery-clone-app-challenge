@@ -5,14 +5,10 @@ export const StyledForm = styled.form`
     font-family: 'Gotham';
     width: clamp(350px, 100%, 734px);
     border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 14px;
     margin-right: auto;
     margin-left: auto;
     color: white;
-    padding: 48px 100px;
+    padding: 48px 150px;
     margin-top: 25px;
 
     & > h1 {
@@ -20,5 +16,16 @@ export const StyledForm = styled.form`
         font-size: 3em;
         margin-top: 80px;
         margin-bottom: 40px;
+        text-align: center;
+    }
+
+    & > div {
+        margin: 0 auto;
+        display: block;
+        width: fit-content;
+
+        & > * {
+            margin-block-start: 1rem;
+        }
     }
 `;

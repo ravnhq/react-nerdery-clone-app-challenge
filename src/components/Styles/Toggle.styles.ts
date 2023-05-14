@@ -3,12 +3,9 @@ import styled from 'styled-components';
 export const SwitchLabel = styled.label`
     display: flex;
     align-items: center;
-    flex-direction: row-reverse;
     gap: 10px;
     cursor: pointer;
     color: white;
-    align-self: self-start;
-    margin-inline-start: 105px;
     > span {
         font-size: 14px;
     }

@@ -21,4 +21,12 @@ export const StyledInput = styled.input`
     &:focus {
         outline: 2px solid white;
     }
+
+    &[data-errors='true'] {
+        outline: 0.5px solid ${({ theme }) => theme.colors.error};
+
+        &:focus {
+            outline: 2.5px solid ${({ theme }) => theme.colors.error};
+        }
+    }
 `;

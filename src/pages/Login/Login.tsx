@@ -1,6 +1,5 @@
 import { Resolver, useForm } from 'react-hook-form';
 import { StyledButton } from '../../components/Styles/Button.styles';
-import { ErrorLabel } from '../../components/Styles/ErrorLabel.styles';
 import { StyledForm } from '../../components/Styles/Form.styles';
 import { StyledInput } from '../../components/Styles/Input.styles';
 import { StyledLabel } from '../../components/Styles/Label.styles';
@@ -12,6 +11,7 @@ import {
 import React from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
 import { StyledHeader } from '../../components/Styles/Header.styles';
+import { ErrorMessage } from '../../components/ErrorMessage';
 
 type FormValues = {
     email: string;
@@ -21,13 +21,12 @@ type FormValues = {
 
 const resolver: Resolver<FormValues> = async (values) => {
     return {
-        values: values.email ? values : {},
+        values: values.email && values.password ? values : {},
         errors: !values.email
             ? {
                   email: {
                       type: 'required',
-                      message:
-                          'Please enter your Spotify username or email address.',
+                      message: 'Please enter your username or email address.',
                   },
                   password: {
                       type: 'required',
@@ -45,6 +44,9 @@ const Login: React.FunctionComponent = () => {
         formState: { errors },
     } = useForm<FormValues>({
         resolver,
+        defaultValues: {
+            remember_me: true,
+        },
     });
     const onSubmit = (data: FormValues) => console.log(data);
 
@@ -55,44 +57,54 @@ const Login: React.FunctionComponent = () => {
             </StyledHeader>
             <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <h1>Log in to Spotify</h1>
-                <span>
-                    <StyledLabel htmlFor="email">Email or username</StyledLabel>
-                    <StyledInput
-                        id="email"
-                        type="text"
-                        placeholder="Email or username"
-                        {...register('email')}
-                    />
-                    {errors?.email && (
-                        <ErrorLabel>{errors.email.message}</ErrorLabel>
-                    )}
-                </span>
-                <span>
-                    <StyledLabel htmlFor="password">Password</StyledLabel>
-                    <StyledInput
-                        id="password"
-                        type="password"
-                        placeholder="Password"
-                        {...register('password')}
-                    />
-                    {errors?.password && (
-                        <ErrorLabel>{errors.password.message}</ErrorLabel>
-                    )}
-                </span>
-                <SwitchLabel htmlFor="remember_me">
-                    <span>Remember Me</span>
-                    <SwitchInput
-                        id="remember_me"
-                        type="checkbox"
-                        {...register('remember_me')}
-                    />
-                    <Switch />
-                </SwitchLabel>
-                <StyledButton type="submit">Log In</StyledButton>
-                <StyledLink>
-                    Don't have an account?
-                    <a href="/sign-in">Sign up for Spotify</a>
-                </StyledLink>
+                <div>
+                    <span>
+                        <StyledLabel htmlFor="email">
+                            Email or username
+                        </StyledLabel>
+                        <StyledInput
+                            data-errors={errors.email !== undefined}
+                            id="email"
+                            type="text"
+                            placeholder="Email or username"
+                            {...register('email')}
+                        />
+                        {errors?.email && (
+                            <ErrorMessage
+                                message={errors.email.message || ''}
+                            />
+                        )}
+                    </span>
+                    <span>
+                        <StyledLabel htmlFor="password">Password</StyledLabel>
+                        <StyledInput
+                            data-errors={errors.password !== undefined}
+                            id="password"
+                            type="password"
+                            placeholder="Password"
+                            {...register('password')}
+                        />
+                        {errors?.password && (
+                            <ErrorMessage
+                                message={errors.password.message || ''}
+                            />
+                        )}
+                    </span>
+                    <SwitchLabel htmlFor="remember_me">
+                        <SwitchInput
+                            id="remember_me"
+                            type="checkbox"
+                            {...register('remember_me')}
+                        />
+                        <Switch />
+                        <span>Remember Me</span>
+                    </SwitchLabel>
+                    <StyledButton type="submit">Log In</StyledButton>
+                    <StyledLink>
+                        Don't have an account?
+                        <a href="/sign-in">Sign up for Spotify</a>
+                    </StyledLink>
+                </div>
             </StyledForm>
         </>
     );
