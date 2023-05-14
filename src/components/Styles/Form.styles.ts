@@ -13,6 +13,7 @@ export const StyledForm = styled.form`
     margin-left: auto;
     color: white;
     padding: 48px 100px;
+    margin-top: 25px;
 
     & > h1 {
         color: white;

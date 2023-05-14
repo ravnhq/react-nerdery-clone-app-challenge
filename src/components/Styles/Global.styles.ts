@@ -13,6 +13,8 @@ const StyledGlobal = createGlobalStyle`
 
     a {
         all: unset;
+        margin: 0;
+        padding: 0;
     }
 
     * {

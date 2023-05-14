@@ -11,6 +11,7 @@ import {
 } from '../../components/Styles/Toggle.styles';
 import React from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
+import { StyledHeader } from '../../components/Styles/Header.styles';
 
 type FormValues = {
     email: string;
@@ -49,6 +50,9 @@ const Login: React.FunctionComponent = () => {
 
     return (
         <>
+            <StyledHeader>
+                <img src="/svg/logo-extended.svg" alt="" />
+            </StyledHeader>
             <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <h1>Log in to Spotify</h1>
                 <span>
