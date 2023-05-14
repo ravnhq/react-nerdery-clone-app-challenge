@@ -11,6 +11,10 @@ const StyledGlobal = createGlobalStyle`
         cursor: pointer;
     }
 
+    a {
+        all: unset;
+    }
+
     * {
         box-sizing: border-box;
         font-family: 'Gotham', sans-serif;
