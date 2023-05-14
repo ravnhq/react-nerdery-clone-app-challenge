@@ -3,15 +3,21 @@ import styled from 'styled-components';
 export const SwitchLabel = styled.label`
     display: flex;
     align-items: center;
+    flex-direction: row-reverse;
     gap: 10px;
     cursor: pointer;
     color: white;
+    align-self: self-start;
+    margin-inline-start: 105px;
+    > span {
+        font-size: 14px;
+    }
 `;
 
 export const Switch = styled.div`
     position: relative;
-    width: 60px;
-    height: 28px;
+    width: 30px;
+    height: 16px;
     background: #b3b3b3;
     border-radius: 32px;
     padding: 4px;
@@ -21,12 +27,12 @@ export const Switch = styled.div`
         transition: 300ms all;
         content: '';
         position: absolute;
-        width: 28px;
-        height: 28px;
+        width: 12px;
+        height: 12px;
         border-radius: 35px;
         top: 50%;
-        left: 4px;
-        background: white;
+        left: 2px;
+        background: black;
         transform: translate(0, -50%);
     }
 `;
@@ -38,7 +44,7 @@ export const SwitchInput = styled.input`
         background: ${({ theme }) => theme.colors.accent};
 
         &:before {
-            transform: translate(32px, -50%);
+            transform: translate(14px, -50%);
         }
     }
 `;

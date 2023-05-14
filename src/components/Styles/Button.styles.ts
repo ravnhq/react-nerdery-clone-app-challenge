@@ -18,4 +18,9 @@ export const StyledButton = styled.button`
     &:hover {
         transform: scale(1.1);
     }
+
+    &:focus {
+        border: 3px black solid;
+        outline: 2px solid white;
+    }
 `;

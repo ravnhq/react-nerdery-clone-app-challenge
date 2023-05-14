@@ -10,6 +10,7 @@ import {
     SwitchInput,
 } from '../../components/Styles/Toggle.styles';
 import React from 'react';
+import { StyledLink } from '../../components/Styles/Link.Styles';
 
 type FormValues = {
     email: string;
@@ -42,10 +43,7 @@ const Login: React.FunctionComponent = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<FormValues>({
-        mode: 'onSubmit',
-        defaultValues: {
-            remember_me: true,
-        },
+        resolver,
     });
     const onSubmit = (data: FormValues) => console.log(data);
 
@@ -69,7 +67,7 @@ const Login: React.FunctionComponent = () => {
                     <StyledLabel htmlFor="password">Password</StyledLabel>
                     <StyledInput
                         id="password"
-                        type="text"
+                        type="password"
                         placeholder="Password"
                         {...register('password')}
                     />
@@ -87,6 +85,10 @@ const Login: React.FunctionComponent = () => {
                     <Switch />
                 </SwitchLabel>
                 <StyledButton type="submit">Log In</StyledButton>
+                <StyledLink>
+                    Don't have an account?
+                    <a href="/sign-in">Sign up for Spotify</a>
+                </StyledLink>
             </StyledForm>
         </>
     );
