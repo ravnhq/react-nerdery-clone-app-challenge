@@ -1,6 +1,7 @@
 import { PropsWithChildren, createContext, useContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import users from '../shared/db/user.json';
+import { useNavigate } from 'react-router-dom';
 
 const authContextDefaults: AuthContext = {
     user: null,
