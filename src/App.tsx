@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { DesktopLayout } from './desktop-layout/desktop-layout';
 import GlobalStyle from './globalStyles';
+import { BrowserRouter } from 'react-router-dom';
 
 const MainDiv = styled.div`
   position: relative;
@@ -15,10 +16,12 @@ const MainDiv = styled.div`
 
 function App() {
   return (
-    <MainDiv>
-      <GlobalStyle />
-      <DesktopLayout />
-    </MainDiv>
+    <BrowserRouter>
+      <MainDiv>
+        <GlobalStyle />
+        <DesktopLayout />
+      </MainDiv>
+    </BrowserRouter>
   );
 }
 
