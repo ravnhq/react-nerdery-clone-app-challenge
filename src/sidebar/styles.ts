@@ -5,12 +5,16 @@ export const SidebarDiv = styled.div`
   display: flex;
   flex-direction: column;
   grid-area: left-sidebar;
+  --sidebar-item-height: 32px;
+  --sidebar-padding-left: 24px;
+  --sidebar-padding-right: 24px;
 `;
 
 export const SidebarNav = styled.nav`
   display: flex;
   flex-direction: column;
   padding-top: 24px;
+  height: 100%;
 `;
 
 export const LogoDiv = styled.div`
