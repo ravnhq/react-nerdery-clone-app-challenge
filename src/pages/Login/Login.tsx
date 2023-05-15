@@ -8,7 +8,7 @@ import {
     Switch,
     SwitchInput,
 } from '../../components/Styles/Toggle.styles';
-import React, { useContext } from 'react';
+import React from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
 import { StyledHeader } from '../../components/Styles/Header.styles';
 import { ErrorLabel } from '../../components/ErrorLabel';
