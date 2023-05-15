@@ -7,6 +7,7 @@ import { ReactComponent as CollectionIcon } from '../../assets/collection-icon.s
 import { ReactComponent as HomeActiveIcon } from '../../assets/home-active-icon.svg';
 import { ReactComponent as SearchActiveIcon } from '../../assets/search-active-icon.svg';
 import { ReactComponent as CollectionActiveIcon } from '../../assets/collection-active-icon.svg';
+import { NavLink } from 'react-router-dom';
 
 export const NavLinkListElement = styled.ul`
   list-style: none;
@@ -26,25 +27,45 @@ export const NavLinkItem = styled.li`
   padding: 0 8px;
 `;
 
-export const NavLinkContainer = styled.a<{ active?: boolean }>`
+export const NavLinkContainer = styled(NavLink)`
   height: 40px;
   align-items: center;
   display: flex;
   gap: 16px;
   padding: 0 16px;
-  color: ${({ active }) => (active ? 'white' : 'var(--unactive)')};
+  color: var(--unactive);
   cursor: pointer;
 
   transition-duration: 0.2s;
   transition-property: color;
   transition-timing-function: linear;
+
+  text-decoration: none;
   span {
     font-weight: 700;
     font-size: 0.875rem;
   }
 
-  &:hover {
+  .icon.active {
+    display: none;
+  }
+
+  .icon {
+    display: block;
+  }
+
+  &:hover,
+  &.active {
     color: white;
+  }
+
+  &.active {
+    .icon {
+      display: none;
+    }
+    .icon.active {
+      display: block;
+    }
   }
 `;
 
