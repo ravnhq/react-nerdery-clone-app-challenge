@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import type * as CSS from 'csstype';
-
-// create a box component for width, height, margin, padding, border, and background
 interface BoxProps {
   width?: string;
   height?: string;
@@ -27,8 +25,6 @@ export const Box = styled.div<BoxProps>`
   min-height: ${({ minHeight }) => minHeight || 'none'};
   max-height: ${({ maxHeight }) => maxHeight || 'none'};
 `;
-
-// create an flex component with props for direction, justify, align, wrap, and gap
 
 interface FlexProps extends BoxProps {
   direction?: 'row' | 'column';
