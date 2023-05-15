@@ -1,12 +1,12 @@
 import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.cdnfonts.com/css/circular-std');
+  @import url('https://fonts.cdnfonts.com/css/gotham');
   body {
     margin: 0;
     padding: 0;
     border: 0;
     color: white;
-    font-family: 'Circular Std', sans-serif;
+    font-family: 'Gotham', sans-serif;
     min-height: 600px;
     min-width: 600px;
     width: 100%;
@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     display: flex;
     height: 100%;
+    line-height: 1.6;
   }
 
   #root {
