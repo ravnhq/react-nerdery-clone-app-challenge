@@ -53,11 +53,9 @@ const Login: React.FunctionComponent = () => {
         },
     });
     const { login } = useAuthContext();
-    const navigate = useNavigate();
 
     const onSubmit = (data: FormValues) => {
         login({ email: data.email, password: data.password });
-        navigate('/');
     };
 
     const manualToggle = (e: React.KeyboardEvent<HTMLDivElement>) => {

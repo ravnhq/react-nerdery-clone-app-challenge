@@ -1,3 +1,4 @@
+import { AuthContextProvider } from './context/AuthContext';
 import Login from './pages/Login/Login';
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
@@ -5,7 +6,11 @@ import { createBrowserRouter } from 'react-router-dom';
 const history = createBrowserRouter([
     {
         path: '/login',
-        element: <Login />,
+        element: (
+            <AuthContextProvider>
+                <Login />
+            </AuthContextProvider>
+        ),
     },
 ]);
 

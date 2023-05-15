@@ -14,6 +14,7 @@ const AuthContext = createContext<AuthContext>(authContextDefaults);
 export const AuthContextProvider: React.FC<PropsWithChildren> = ({
     children,
 }) => {
+    const navigate = useNavigate();
     const [storedUser, setStoredUser] = useLocalStorage<User | null>(
         'user',
         null,
@@ -27,6 +28,7 @@ export const AuthContextProvider: React.FC<PropsWithChildren> = ({
         }
 
         setStoredUser(user);
+        navigate('/');
     };
 
     const logout = () => {
