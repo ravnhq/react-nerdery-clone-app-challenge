@@ -17,5 +17,12 @@ declare module 'styled-components' {
             error_content: string;
             bg: string;
         };
+
+        breakpoints: {
+            sm: string;
+            md: string;
+            lg: string;
+            xl: string;
+        };
     }
 }

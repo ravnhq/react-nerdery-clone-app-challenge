@@ -3,17 +3,19 @@ import styled from 'styled-components';
 export const StyledForm = styled.form`
     background-color: black;
     font-family: 'Gotham';
-    width: clamp(350px, 100%, 734px);
+    width: clamp(320px, 100%, 734px);
+    height: 572px;
     border-radius: 8px;
     margin-right: auto;
     margin-left: auto;
     color: white;
-    padding: 48px 150px;
+    padding: 38px 120px;
     margin-top: 25px;
 
     & > h1 {
         color: white;
-        font-size: 3em;
+        width: 100%;
+        font-size: clamp(1em, 2em, 3em);
         margin-top: 80px;
         margin-bottom: 40px;
         text-align: center;
@@ -25,7 +27,12 @@ export const StyledForm = styled.form`
         width: fit-content;
 
         & > * {
-            margin-block-start: 1rem;
+            margin-block-end: 1rem;
         }
+    }
+
+    @media ${({ theme }) => theme.breakpoints.sm} {
+        padding: 10px 0;
+        height: auto;
     }
 `;

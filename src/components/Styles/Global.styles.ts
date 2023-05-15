@@ -8,7 +8,7 @@ const StyledGlobal = createGlobalStyle`
 
     button {
         all: unset;
-        cursor: pointer;
+        cursor: pointer; 
     }
 
     a {
@@ -17,12 +17,10 @@ const StyledGlobal = createGlobalStyle`
         padding: 0;
     }
 
-    * {
-        box-sizing: border-box;
-        font-family: 'Gotham', sans-serif;
-    }
-
     body {
+        font-family: 'Gotham', sans-serif;
+        overflow-x: hidden;
+        margin: 0;
         background-color: ${({ theme }) => theme.colors.bg};
     };
 `;

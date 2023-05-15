@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledButton = styled.button`
+    color: black;
     background-color: ${({ theme }) => theme.colors.accent};
     width: 324px;
     border-radius: 500px;
@@ -22,5 +23,9 @@ export const StyledButton = styled.button`
     &:focus {
         border: 3px black solid;
         outline: 2px solid white;
+    }
+
+    @media ${({ theme }) => theme.breakpoints.sm} {
+        font-size: 16px;
     }
 `;

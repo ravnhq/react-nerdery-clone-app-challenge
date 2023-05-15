@@ -15,6 +15,12 @@ const darkTheme: DefaultTheme = {
         error_content: 'rgb(241, 94, 108)',
         bg: '#191919',
     },
+    breakpoints: {
+        sm: '(min-width: 320px)',
+        md: '(min-width: 768px)',
+        lg: '(min-width: 1024px)',
+        xl: '(min-width: 2560px)',
+    },
 };
 
 export { darkTheme };

@@ -8,10 +8,11 @@ import {
     Switch,
     SwitchInput,
 } from '../../components/Styles/Toggle.styles';
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
 import { StyledHeader } from '../../components/Styles/Header.styles';
-import { ErrorMessage } from '../../components/ErrorMessage';
+import { ErrorLabel } from '../../components/ErrorLabel';
+import { useAuthContext } from '../../context/AuthContext';
 
 type FormValues = {
     email: string;
@@ -50,7 +51,10 @@ const Login: React.FunctionComponent = () => {
             remember_me: true,
         },
     });
-    const onSubmit = (data: FormValues) => console.log(data);
+    const { login } = useAuthContext();
+    const onSubmit = (data: FormValues) => {
+        login({ email: data.email, password: data.password });
+    };
 
     const manualToggle = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.code !== 'Space') return;
@@ -78,9 +82,7 @@ const Login: React.FunctionComponent = () => {
                             {...register('email')}
                         />
                         {errors?.email && (
-                            <ErrorMessage
-                                message={errors.email.message || ''}
-                            />
+                            <ErrorLabel message={errors.email.message || ''} />
                         )}
                     </div>
                     <div>
@@ -93,7 +95,7 @@ const Login: React.FunctionComponent = () => {
                             {...register('password')}
                         />
                         {errors?.password && (
-                            <ErrorMessage
+                            <ErrorLabel
                                 message={errors.password.message || ''}
                             />
                         )}

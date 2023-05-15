@@ -32,6 +32,10 @@ export const Switch = styled.div`
         background: black;
         transform: translate(0, -50%);
     }
+
+    @media ${({ theme }) => theme.breakpoints.sm} {
+        height: 10px;
+    }
 `;
 
 export const SwitchInput = styled.input`
@@ -42,6 +46,10 @@ export const SwitchInput = styled.input`
 
         &:before {
             transform: translate(14px, -50%);
+
+            @media ${({ theme }) => theme.breakpoints.sm} {
+                transform: translate(20px, -50%);
+            }
         }
     }
 `;
