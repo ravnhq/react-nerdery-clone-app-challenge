@@ -6,9 +6,9 @@ interface Props {
 }
 
 const ErrorBanner: React.FunctionComponent<Props> = ({ message }) => (
-    <StyledErrorBanner>
+    <StyledErrorBanner data-testid="error-banner">
         <MdErrorOutline />
-        <span>{message}</span>
+        <span data-test-id="error-banner">{message}</span>
     </StyledErrorBanner>
 );
 

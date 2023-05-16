@@ -52,11 +52,9 @@ const Login: React.FunctionComponent = () => {
             remember_me: true,
         },
     });
-    const { login } = useAuthContext();
-    const [error, setError] = useState<string | null>();
+    const { login, error, setError } = useAuthContext();
 
     const onSubmit = (data: FormValues) => {
-        setError(null);
         try {
             login({ email: data.email, password: data.password });
         } catch (e: any) {
@@ -75,9 +73,9 @@ const Login: React.FunctionComponent = () => {
             <StyledHeader>
                 <img src="/svg/logo-extended.svg" alt="" />
             </StyledHeader>
-            <StyledForm onSubmit={handleSubmit(onSubmit)}>
+            <StyledForm role="form" onSubmit={handleSubmit(onSubmit)}>
                 <h1>Log in to Spotify</h1>
-                {error && <ErrorBanner message={error} />}
+                {Boolean(error) && <ErrorBanner message={error} />}
                 <div>
                     <div>
                         <StyledLabel htmlFor="email">
