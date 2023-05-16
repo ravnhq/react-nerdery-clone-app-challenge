@@ -11,6 +11,7 @@ export const StyledForm = styled.form`
     color: white;
     padding: 38px 120px;
     margin-top: 25px;
+    overflow: hidden;
 
     & > h1 {
         color: white;

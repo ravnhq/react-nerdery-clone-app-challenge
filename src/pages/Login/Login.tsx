@@ -8,12 +8,12 @@ import {
     Switch,
     SwitchInput,
 } from '../../components/Styles/Toggle.styles';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
 import { StyledHeader } from '../../components/Styles/Header.styles';
 import { ErrorLabel } from '../../components/ErrorLabel';
 import { useAuthContext } from '../../context/AuthContext';
-import { useNavigate } from 'react-router';
+import { ErrorBanner } from '../../components/ErrorBanner';
 
 type FormValues = {
     email: string;
@@ -53,9 +53,15 @@ const Login: React.FunctionComponent = () => {
         },
     });
     const { login } = useAuthContext();
+    const [error, setError] = useState<string | null>();
 
     const onSubmit = (data: FormValues) => {
-        login({ email: data.email, password: data.password });
+        setError(null);
+        try {
+            login({ email: data.email, password: data.password });
+        } catch (e: any) {
+            setError(e.message);
+        }
     };
 
     const manualToggle = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -71,6 +77,7 @@ const Login: React.FunctionComponent = () => {
             </StyledHeader>
             <StyledForm onSubmit={handleSubmit(onSubmit)}>
                 <h1>Log in to Spotify</h1>
+                {error && <ErrorBanner message={error} />}
                 <div>
                     <div>
                         <StyledLabel htmlFor="email">
