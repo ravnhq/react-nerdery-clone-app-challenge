@@ -19,7 +19,7 @@ const LegalLink = styled.div`
   margin-right: 16px;
   margin-bottom: 8px;
   a {
-    color: #a7a7a7;
+    color: var(--soft);
     text-decoration: none !important;
     line-height: inherit !important;
     border: none !important;
