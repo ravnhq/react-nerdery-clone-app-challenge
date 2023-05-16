@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Sidebar } from '../sidebar/sidebar';
 import { MainView } from '../main-view/main-view';
+import { Header } from '../header';
 
 const Div = styled.div`
   background-color: var(--background-color);
@@ -20,6 +21,7 @@ function DesktopLayout() {
   return (
     <Div>
       <Sidebar />
+      <Header />
       <MainView />
     </Div>
   );
