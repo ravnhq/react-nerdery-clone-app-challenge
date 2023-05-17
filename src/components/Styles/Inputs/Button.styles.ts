@@ -1,15 +1,21 @@
 import styled from 'styled-components';
 
-export const StyledButton = styled.button`
+type Props = {
+    width?: string;
+    center?: boolean;
+};
+
+export const StyledButton = styled.button<Props>`
     color: black;
     background-color: ${({ theme }) => theme.colors.accent};
-    width: 324px;
+    width: ${({ width }) => width || '324px'};
     border-radius: 500px;
     font-weight: 700;
     height: 48px;
     text-align: center;
     transition: transform ease-in-out 200ms;
     vertical-align: middle;
+    ${({ center }) => center && 'margin: 0 auto;'}
     display: flex;
     align-items: center;
     justify-content: center;

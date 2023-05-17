@@ -12,6 +12,7 @@ export const StyledSignUpContainer = styled.div`
         line-height: 36px;
         letter-spacing: -0.04em;
         font-size: 2em;
+        padding-bottom: 28px;
 
         @media ${(props) => props.theme.breakpoints.md} {
             font-size: 1.75em;
