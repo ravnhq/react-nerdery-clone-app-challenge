@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 
-export const StyledInput = styled.input`
+type Props = {
+    backgroundColor?: string;
+};
+
+export const StyledInput = styled.input<Props>`
     color: white;
     font-family: sans-serif;
-    background-color: #121212;
-    width: 324px;
+    background-color: ${({ backgroundColor }) => backgroundColor || '#121212'};
+    width: 100%;
+    min-width: 326px;
     border: none;
     outline: 1px solid #707070;
     display: block;
@@ -13,6 +18,10 @@ export const StyledInput = styled.input`
     padding-inline-end: 8px;
     min-block-size: 48px;
     font-size: 1rem;
+
+    ::-ms-reveal {
+        filter: invert(100%);
+    }
 
     &:hover {
         outline: 1px solid #c4c4c4;
