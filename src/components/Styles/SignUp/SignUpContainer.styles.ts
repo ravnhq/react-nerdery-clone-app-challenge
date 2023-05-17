@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SignUpContainer = styled.div`
+export const StyledSignUpContainer = styled.div`
     color: white;
     width: clamp(327px, 100%, 450px);
     margin: 0 auto;
