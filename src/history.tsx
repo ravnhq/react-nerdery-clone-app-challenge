@@ -1,3 +1,4 @@
+import SignUp from './pages/SignUp/SignUp';
 import { AuthContextProvider } from './context/AuthContext';
 import Login from './pages/Login/Login';
 import React from 'react';
@@ -11,6 +12,10 @@ const history = createBrowserRouter([
                 <Login />
             </AuthContextProvider>
         ),
+    },
+    {
+        path: '/signup',
+        element: <SignUp />,
     },
 ]);
 
