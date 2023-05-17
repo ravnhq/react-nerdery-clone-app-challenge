@@ -2,14 +2,15 @@ import styled from 'styled-components';
 
 type Props = {
     backgroundColor?: string;
+    flexGrow?: string;
+    width?: string;
 };
 
 export const StyledInput = styled.input<Props>`
     color: white;
     font-family: sans-serif;
     background-color: ${({ backgroundColor }) => backgroundColor || '#121212'};
-    width: 100%;
-    min-width: 326px;
+    width: ${({ width }) => width || '100%'};
     border: none;
     outline: 1px solid #707070;
     display: block;
@@ -18,6 +19,7 @@ export const StyledInput = styled.input<Props>`
     padding-inline-end: 8px;
     min-block-size: 48px;
     font-size: 1rem;
+    flex-grow: ${({ flexGrow }) => flexGrow || '0'};
 
     ::-ms-reveal {
         filter: invert(100%);
