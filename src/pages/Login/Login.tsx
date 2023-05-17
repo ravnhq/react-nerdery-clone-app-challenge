@@ -10,7 +10,7 @@ import {
 } from '../../components/Styles/Inputs/Toggle.styles';
 import React from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
-import { StyledHeader } from '../../components/Styles/Header.styles';
+import { StyledHeader } from '../../components/Styles/Login/Header.styles';
 import { ErrorLabel } from '../../components/ErrorLabel';
 import { useAuthContext } from '../../context/AuthContext';
 import { ErrorBanner } from '../../components/ErrorBanner';
