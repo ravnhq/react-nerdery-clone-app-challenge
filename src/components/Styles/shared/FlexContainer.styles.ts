@@ -13,6 +13,8 @@ type Props = {
     flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
     columnGap?: string;
     rowGap?: string;
+    marginTop?: string;
+    marginBottom?: string;
 };
 
 export const StyledFlexContainer = styled.div<Props>`
@@ -23,4 +25,6 @@ export const StyledFlexContainer = styled.div<Props>`
     flex-wrap: ${({ flexWrap }) => flexWrap || 'nowrap'};
     column-gap: ${({ columnGap }) => columnGap || '0'};
     row-gap: ${({ rowGap }) => rowGap || '0'};
+    margin-top: ${({ marginTop }) => marginTop || '0'};
+    margin-bottom: ${({ marginBottom }) => marginBottom || '0'};
 `;
