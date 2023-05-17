@@ -1,14 +1,14 @@
 import { Resolver, useForm } from 'react-hook-form';
-import { StyledButton } from '../../components/Styles/Button.styles';
-import { StyledForm } from '../../components/Styles/Form.styles';
-import { StyledInput } from '../../components/Styles/Input.styles';
+import { StyledButton } from '../../components/Styles/Inputs/Button.styles';
+import { StyledForm } from '../../components/Styles/Login/LoginForm.styles';
+import { StyledInput } from '../../components/Styles/Inputs/Input.styles';
 import { StyledLabel } from '../../components/Styles/Label.styles';
 import {
     SwitchLabel,
     Switch,
     SwitchInput,
-} from '../../components/Styles/Toggle.styles';
-import React, { useState } from 'react';
+} from '../../components/Styles/Inputs/Toggle.styles';
+import React from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
 import { StyledHeader } from '../../components/Styles/Header.styles';
 import { ErrorLabel } from '../../components/ErrorLabel';
