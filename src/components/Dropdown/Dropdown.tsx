@@ -9,6 +9,7 @@ interface Props {
     backgroundColor?: string;
     flexGrow?: string;
     width?: string;
+    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const Dropdown: React.FunctionComponent<Props> = ({
@@ -16,11 +17,13 @@ const Dropdown: React.FunctionComponent<Props> = ({
     backgroundColor,
     flexGrow,
     width,
+    onChange,
 }) => (
     <StyledDropdown
         backgroundColor={backgroundColor}
         flexGrow={flexGrow}
         width={width}
+        onChange={onChange}
         defaultValue={options[0].value}
     >
         {options.map((option, index) => (
