@@ -6,12 +6,15 @@ import { StyledInput } from '../../components/Styles/Inputs/Input.styles';
 import { StyledLabel } from '../../components/Styles/Label.styles';
 import { ErrorLabel } from '../../components/ErrorLabel';
 import { StyledFlexContainer } from '../../components/Styles/shared/FlexContainer.styles';
-import { RadioButton } from '../../components/RadioButton';
 import { StyledButton } from '../../components/Styles/Inputs/Button.styles';
 import { CheckBox } from '../../components/CheckBox';
 import { StyledLink } from '../../components/Styles/Link.Styles';
 import { Dropdown } from '../../components/Dropdown';
-
+import { SubmitHandler, useForm } from 'react-hook-form';
+import {
+    StyledRadioButtonLabel,
+    StyledRadioButton,
+} from '../../components/Styles/RadioButton/RadioButton.styles';
 const months = [
     { value: '00', label: 'Month' },
     { value: '01', label: 'January' },
@@ -28,14 +31,40 @@ const months = [
     { value: '12', label: 'December' },
 ];
 
+const genders = ['Male', 'Female', 'Non-binary', 'Other', 'Prefer not to say'];
+
+type FormValues = {
+    email: string;
+    password: string;
+    profile_name: string;
+    day: string;
+    month: string;
+    year: string;
+    gender: string;
+};
+
 const SignUp: React.FunctionComponent = () => {
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+        control,
+    } = useForm<FormValues>();
+
+    const onSubmit: SubmitHandler<FormValues> = (data) => {
+        console.log(data);
+    };
+
+    const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) =>
+        setValue('month', event.target.value);
     return (
         <StyledSignUpContainer>
             <StyledLogo href="/">
                 <img src="/svg/logo-extended.svg" alt="" />
             </StyledLogo>
             <h2>Sign up for free to start listening.</h2>
-            <StyledSignUp>
+            <StyledSignUp onSubmit={handleSubmit(onSubmit)}>
                 <h2>Sign up with your email address</h2>
 
                 <div>
@@ -47,8 +76,15 @@ const SignUp: React.FunctionComponent = () => {
                         type="text"
                         backgroundColor="transparent"
                         placeholder="Enter your email"
+                        {...register('email', {
+                            required: true,
+                            pattern:
+                                /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+                        })}
                     />
-                    <ErrorLabel message="You need to enter your email." />
+                    {errors.email && (
+                        <ErrorLabel message="You need to enter your email." />
+                    )}
                 </div>
                 <div>
                     <StyledLabel htmlFor="password">
@@ -59,8 +95,11 @@ const SignUp: React.FunctionComponent = () => {
                         type="password"
                         backgroundColor="transparent"
                         placeholder="Create a password"
+                        {...register('password', { required: true })}
                     />
-                    <ErrorLabel message="You need to enter a password." />
+                    {errors.password && (
+                        <ErrorLabel message="You need to enter a password." />
+                    )}
                 </div>
                 <div>
                     <StyledLabel htmlFor="profile_name">
@@ -71,8 +110,11 @@ const SignUp: React.FunctionComponent = () => {
                         type="text"
                         backgroundColor="transparent"
                         placeholder="Enter a profile name"
+                        {...register('profile_name', { required: true })}
                     />
-                    <ErrorLabel message="Enter a name for your profile." />
+                    {errors.profile_name && (
+                        <ErrorLabel message="Enter a name for your profile." />
+                    )}
                 </div>
                 <div>
                     <StyledLabel htmlFor="date-of-birth">
@@ -92,14 +134,20 @@ const SignUp: React.FunctionComponent = () => {
                                 backgroundColor="transparent"
                                 placeholder="DD"
                                 width="90px"
+                                {...register('day', {
+                                    required: true,
+                                    min: 1,
+                                    max: 31,
+                                    pattern: /[0-9]/,
+                                    maxLength: 2,
+                                })}
                             />
                         </div>
                         <div>
                             <StyledLabel htmlFor="month">Month</StyledLabel>
                             <Dropdown
-                                backgroundColor="transparent"
-                                flexGrow="1"
                                 options={months}
+                                onChange={handleMonthChange}
                             />
                         </div>
                         <div>
@@ -110,12 +158,25 @@ const SignUp: React.FunctionComponent = () => {
                                 backgroundColor="transparent"
                                 placeholder="YYYY"
                                 width="90px"
+                                {...register('year', {
+                                    required: true,
+                                    min: 1900,
+                                    max: 2021,
+                                    pattern: /[0-9]/,
+                                    maxLength: 4,
+                                })}
                             />
                         </div>
                     </StyledFlexContainer>
-                    <ErrorLabel message="Enter a valid day of the month." />
-                    <ErrorLabel message="Select your birth month." />
-                    <ErrorLabel message="Enter a valid year." />
+                    {errors.day && (
+                        <ErrorLabel message="Enter a valid day of the month." />
+                    )}
+                    {errors.month && (
+                        <ErrorLabel message="Select your birth month." />
+                    )}
+                    {errors.year && (
+                        <ErrorLabel message="Enter a valid year." />
+                    )}
                 </div>
                 <div>
                     <StyledLabel htmlFor="date-of-birth">
@@ -127,13 +188,22 @@ const SignUp: React.FunctionComponent = () => {
                         columnGap="14px"
                         rowGap="12px"
                     >
-                        <RadioButton value="Male" />
-                        <RadioButton value="Female" />
-                        <RadioButton value="Non-binary" />
-                        <RadioButton value="Other" />
-                        <RadioButton value="Prefer no to say" />
+                        {genders.map((gender) => (
+                            <StyledRadioButtonLabel key={gender}>
+                                <StyledRadioButton
+                                    type="radio"
+                                    value={gender}
+                                    {...register('gender', {
+                                        required: true,
+                                    })}
+                                />
+                                <span>{gender}</span>
+                            </StyledRadioButtonLabel>
+                        ))}
                     </StyledFlexContainer>
-                    <ErrorLabel message="Select your gender." />
+                    {errors.gender && (
+                        <ErrorLabel message="Select your gender." />
+                    )}
                 </div>
                 <div>
                     <CheckBox label="I would prefer not to receive marketing messages from Spotify" />
