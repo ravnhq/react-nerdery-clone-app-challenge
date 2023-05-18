@@ -9,6 +9,7 @@ import { StyledFlexContainer } from '../../components/Styles/shared/FlexContaine
 import { RadioButton } from '../../components/RadioButton';
 import { StyledButton } from '../../components/Styles/Inputs/Button.styles';
 import { CheckBox } from '../../components/CheckBox';
+import { StyledLink } from '../../components/Styles/Link.Styles';
 
 const SignUp: React.FunctionComponent = () => {
     return (
@@ -126,6 +127,10 @@ const SignUp: React.FunctionComponent = () => {
                 <StyledButton width="158px" center>
                     Sign up
                 </StyledButton>
+                <StyledLink color="lightgreen">
+                    Have an account?
+                    <a href="/sign-in">Login</a>
+                </StyledLink>
             </StyledSignUp>
         </StyledSignUpContainer>
     );

@@ -5,6 +5,7 @@ export const StyledSignUpContainer = styled.div`
     width: clamp(327px, 100%, 450px);
     margin: 0 auto;
     padding: 0 24px;
+    margin-bottom: 10rem;
 
     & > h2 {
         box-sizing: border-box;
