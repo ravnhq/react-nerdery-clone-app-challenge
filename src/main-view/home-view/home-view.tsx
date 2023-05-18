@@ -1,12 +1,11 @@
 import { Flex } from '../../shared/ui/flex';
 import { useAsync } from '../../hooks/useAsync';
 import { getSections } from '../../services/axios/http-spotify-api';
-import { Section } from '../../shared/types/section';
 import { ContainedShelf } from './shelf/shelf';
 import { HomeDiv, LightDiv, StyledMain } from './styles';
 
 function HomeView() {
-  const { value: sections } = useAsync<Section[]>(getSections);
+  const { value: sections } = useAsync(getSections);
   return (
     <HomeDiv>
       <div className="header-spacer" />
