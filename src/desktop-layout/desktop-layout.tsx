@@ -3,7 +3,7 @@ import { Sidebar } from '../sidebar/sidebar';
 import { MainView } from '../main-view/main-view';
 import { Header } from '../header';
 
-const Div = styled.div`
+const LayoutDiv = styled.div`
   background-color: var(--background-color);
   display: grid;
   grid-template-areas:
@@ -19,11 +19,11 @@ const Div = styled.div`
 
 function DesktopLayout() {
   return (
-    <Div>
+    <LayoutDiv>
       <Sidebar />
       <Header />
       <MainView />
-    </Div>
+    </LayoutDiv>
   );
 }
 
