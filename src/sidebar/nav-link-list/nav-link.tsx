@@ -1,13 +1,5 @@
-import { ElementType } from 'react';
 import { NavLinkContainer } from './styles';
-
-export interface NavLinkProps {
-  activeIcon: ElementType;
-  icon: ElementType;
-  to: string;
-  name: string;
-  active?: boolean;
-}
+import { NavLinkProps } from '../../shared/types/nav-link';
 
 export const NavLink = ({
   icon: Icon,
