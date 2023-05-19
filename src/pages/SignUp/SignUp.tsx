@@ -9,12 +9,13 @@ import { StyledFlexContainer } from '../../components/Styles/shared/FlexContaine
 import { StyledButton } from '../../components/Styles/Inputs/Button.styles';
 import { CheckBox } from '../../components/CheckBox';
 import { StyledLink } from '../../components/Styles/Link.Styles';
-import { Dropdown } from '../../components/Dropdown';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
     StyledRadioButtonLabel,
     StyledRadioButton,
 } from '../../components/Styles/RadioButton/RadioButton.styles';
+import { StyledDropdown } from '../../components/Styles/Inputs/Dropdown.styles';
+
 const months = [
     { value: '00', label: 'Month' },
     { value: '01', label: 'January' },
@@ -49,7 +50,6 @@ const SignUp: React.FunctionComponent = () => {
         handleSubmit,
         setValue,
         formState: { errors },
-        control,
     } = useForm<FormValues>();
 
     const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -143,12 +143,30 @@ const SignUp: React.FunctionComponent = () => {
                                 })}
                             />
                         </div>
-                        <div>
+                        <div
+                            style={{
+                                flexGrow: 2,
+                            }}
+                        >
                             <StyledLabel htmlFor="month">Month</StyledLabel>
-                            <Dropdown
-                                options={months}
-                                onChange={handleMonthChange}
-                            />
+                            <StyledDropdown
+                                id="month"
+                                flexGrow="12"
+                                width="100%"
+                                {...register('month', {
+                                    required: true,
+                                    validate: (value) => value !== '00',
+                                })}
+                            >
+                                {months.map((month) => (
+                                    <option
+                                        key={month.label}
+                                        value={month.value}
+                                    >
+                                        {month.label}
+                                    </option>
+                                ))}
+                            </StyledDropdown>
                         </div>
                         <div>
                             <StyledLabel htmlFor="year">Year</StyledLabel>
