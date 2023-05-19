@@ -1,5 +1,5 @@
-import { StyledDropdown } from '../../components/Styles/Dropdown/Dropdown.styles';
 import React from 'react';
+import { StyledDropdown } from './Dropdown.styles';
 
 interface Props {
     options: {
