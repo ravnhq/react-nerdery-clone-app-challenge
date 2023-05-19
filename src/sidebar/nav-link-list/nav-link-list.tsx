@@ -1,37 +1,8 @@
-import {
-  StyledCollectionActiveIcon,
-  StyledCollectionIcon,
-  StyledHomeActiveIcon,
-  StyledHomeIcon,
-  StyledSearchActiveIcon,
-  StyledSearchIcon,
-} from './styles';
-import { NavLink, NavLinkProps } from './nav-link';
+import { NavLink } from './nav-link';
 import { NavLinkItem, NavLinkListElement } from './styles';
+import { getNavLinks } from '../../services/static-data';
 
-const links: NavLinkProps[] = [
-  {
-    icon: StyledHomeIcon,
-    activeIcon: StyledHomeActiveIcon,
-    name: 'Inicio',
-    to: '/',
-    active: true,
-  },
-  {
-    icon: StyledSearchIcon,
-    activeIcon: StyledSearchActiveIcon,
-    to: '/search',
-    name: 'Buscar',
-    active: false,
-  },
-  {
-    icon: StyledCollectionIcon,
-    activeIcon: StyledCollectionActiveIcon,
-    to: '/library',
-    name: 'Tu biblioteca',
-    active: false,
-  },
-];
+const links = getNavLinks();
 
 export const NavLinkList = () => (
   <NavLinkListElement>
