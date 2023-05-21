@@ -1,4 +1,4 @@
-import { ImageData, ImageSource } from './image-data';
+import { ImageSource } from './image-data';
 
 export interface SectionItem {
   name: string;

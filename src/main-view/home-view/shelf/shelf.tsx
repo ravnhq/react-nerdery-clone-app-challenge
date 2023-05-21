@@ -34,13 +34,15 @@ const Shelf = ({ title, shelfLink, items, className, uri }: ShelfProps) => (
       minContainerWidth={372}
       columnWidth={174}
     >
-      {items.slice(0, 6).map(item => (
+      {items.map(item => (
         <ShelfCard key={item.uri}>
           <div className="portrait">
             <img src={item.image.url} alt={item.name} />
           </div>
           <div className="card-text">
-            <a href={`/song/${item.uri}`}>{item.name}</a>
+            <a href={`/song/${item.uri}`}>
+              <div>{item.name}</div>
+            </a>
             <div>{item.description}</div>
           </div>
         </ShelfCard>

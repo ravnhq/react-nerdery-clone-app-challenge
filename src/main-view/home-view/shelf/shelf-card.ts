@@ -7,15 +7,31 @@ interface ShelfCardContainerProps {
   columnWidth?: number;
 }
 export const ShelfCardsContainer = styled.div<ShelfCardContainerProps>`
-  grid-gap: ${props => props.gridGap}px;
+  grid-column-gap: ${props => props.gridGap}px;
   display: grid;
   grid-template-columns: repeat(${props => props.columnCount}, minmax(0, 1fr));
   min-width: ${props => props.minContainerWidth}px;
   --column-width: ${props => props.columnWidth}px;
 
-  grid-auto-rows: 0;
+  grid-auto-flow: row;
+  grid-auto-rows: 0px;
   grid-template-rows: 1fr;
-  overflow-y: hidden;
+
+  @media (min-width: 1130px) and (max-width: 1300px) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  @media (min-width: 960px) and (max-width: 1130px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @media (min-width: 820px) and (max-width: 960px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (max-width: 820px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 `;
 
 export const ShelfCard = styled.div`
@@ -36,25 +52,37 @@ export const ShelfCard = styled.div`
   .card-text {
     min-height: 62px;
     box-sizing: border-box;
+
+    max-height: 4.5rem;
+
     a {
-      color: var(--base);
-      text-decoration: none;
-      display: inline-block;
-      max-width: 100%;
-      vertical-align: middle;
+      div {
+        color: var(--base);
+        text-decoration: none;
+        display: block;
+        width: calc(100%);
+        white-space: nowrap;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
     div {
       font-weight: 400;
       font-size: 0.875rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
+
       margin-top: 4px;
       margin-block: 0px;
       box-sizing: border-box;
-      white-space: normal;
+      max-height: 3rem;
+
+      overflow: hidden;
 
       display: -webkit-box;
       -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+
+      text-overflow: ellipsis;
     }
   }
 
