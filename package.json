@@ -8,10 +8,10 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write src",
-    "preview": "vite preview",
-    "test": "jest"
+    "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1",
@@ -24,9 +24,6 @@
     "@spotify/eslint-config-react": "^14.1.6",
     "@spotify/eslint-config-typescript": "^14.1.6",
     "@spotify/prettier-config": "^14.1.6",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^14.0.0",
-    "@types/jest": "^29.5.1",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",
@@ -34,14 +31,11 @@
     "@typescript-eslint/parser": "^5.57.1",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "csstype": "^3.1.2",
+    "dotenv": "^16.0.3",
     "eslint": "^8.40.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "jest-environment-jsdom": "^29.5.0",
-    "jsdom": "^22.0.0",
-    "ts-jest": "^29.1.0",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2",
-    "vitest": "^0.31.0"
+    "vite": "^4.3.2"
   }
 }
