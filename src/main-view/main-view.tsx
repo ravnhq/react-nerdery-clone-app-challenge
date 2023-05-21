@@ -4,13 +4,18 @@ import { HomeView } from './home-view';
 
 const MainDiv = styled.div`
   grid-area: main-view;
-  background-color: #121212;
+  background-color: var(--main-base-color);
   overflow-y: scroll;
+
+  .header-spacer {
+    height: 64px;
+  }
 `;
 
 function MainView() {
   return (
     <MainDiv>
+      <div className="header-spacer" />
       <Routes>
         <Route index element={<HomeView />} />
         <Route path="search" element={<div>Search</div>} />

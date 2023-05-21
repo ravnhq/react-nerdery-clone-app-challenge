@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 export const HomeDiv = styled.div`
   height: 1000px;
-
-  .header-spacer {
-    height: 64px;
-  }
 `;
 
 export const LightDiv = styled.div`
