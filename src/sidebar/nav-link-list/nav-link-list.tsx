@@ -14,7 +14,6 @@ export const NavLinkList = () => (
           icon={link.icon}
           activeIcon={link.activeIcon}
           name={link.name}
-          active={link.active}
         />
       ))}
     </NavLinkItem>
