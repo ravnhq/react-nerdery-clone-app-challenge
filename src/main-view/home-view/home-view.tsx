@@ -1,6 +1,6 @@
 import { Flex } from '../../shared/ui/flex';
 import { useAsync } from '../../hooks/useAsync';
-import { getSections } from '../../services/axios/http-spotify-api';
+import { getSections } from '../../services/http-spotify-api';
 import { StyledShelf } from './shelf';
 import { HomeDiv, LightDiv, StyledMain } from './styles';
 
