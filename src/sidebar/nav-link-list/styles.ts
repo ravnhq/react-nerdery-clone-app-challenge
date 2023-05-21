@@ -44,6 +44,7 @@ export const NavLinkContainer = styled(NavLink)`
 
   .icon {
     display: block;
+    fill: currentColor;
   }
 
   &:hover,
