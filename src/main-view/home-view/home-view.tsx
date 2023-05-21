@@ -1,14 +1,13 @@
 import { Flex } from '../../shared/ui/flex';
 import { useAsync } from '../../hooks/useAsync';
 import { getSections } from '../../services/axios/http-spotify-api';
-import { ContainedShelf } from './shelf/shelf';
+import { StyledShelf } from './shelf';
 import { HomeDiv, LightDiv, StyledMain } from './styles';
 
 function HomeView() {
   const { value: sections } = useAsync(getSections);
   return (
     <HomeDiv>
-      <div className="header-spacer" />
       <StyledMain>
         <LightDiv style={{ backgroundColor: 'rgb(83, 83, 83)' }} />
         <Flex
@@ -18,7 +17,7 @@ function HomeView() {
           gap="24px"
         >
           {sections?.map(section => (
-            <ContainedShelf
+            <StyledShelf
               key={section.uri}
               uri={section.uri}
               title={section.title}

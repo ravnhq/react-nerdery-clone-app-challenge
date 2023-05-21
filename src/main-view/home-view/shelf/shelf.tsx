@@ -49,7 +49,7 @@ const Shelf = ({ title, shelfLink, items, className, uri }: ShelfProps) => (
   </ShelfSection>
 );
 
-export const ContainedShelf = styled(Shelf)`
+export const StyledShelf = styled(Shelf)`
   flex: 1 1 auto;
   flex-basis: 100%;
 `;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DesktopLayout } from './desktop-layout/desktop-layout';
+import { DesktopLayout } from './desktop-layout';
 import GlobalStyle from './globalStyles';
 import { BrowserRouter } from 'react-router-dom';
 
