@@ -1,12 +1,4 @@
 import styled from 'styled-components';
-
-import { ReactComponent as HomeIcon } from '../../assets/home-icon.svg';
-import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg';
-import { ReactComponent as CollectionIcon } from '../../assets/collection-icon.svg';
-
-import { ReactComponent as HomeActiveIcon } from '../../assets/home-active-icon.svg';
-import { ReactComponent as SearchActiveIcon } from '../../assets/search-active-icon.svg';
-import { ReactComponent as CollectionActiveIcon } from '../../assets/collection-active-icon.svg';
 import { NavLink } from 'react-router-dom';
 
 export const NavLinkListElement = styled.ul`
@@ -67,26 +59,4 @@ export const NavLinkContainer = styled(NavLink)`
       display: block;
     }
   }
-`;
-
-export const StyledHomeIcon = styled(HomeIcon)`
-  fill: currentColor;
-`;
-
-export const StyledSearchIcon = styled(SearchIcon)`
-  fill: currentColor;
-`;
-export const StyledCollectionIcon = styled(CollectionIcon)`
-  fill: currentColor;
-`;
-
-export const StyledHomeActiveIcon = styled(HomeActiveIcon)`
-  fill: currentColor;
-`;
-
-export const StyledSearchActiveIcon = styled(SearchActiveIcon)`
-  fill: currentColor;
-`;
-export const StyledCollectionActiveIcon = styled(CollectionActiveIcon)`
-  fill: currentColor;
 `;
