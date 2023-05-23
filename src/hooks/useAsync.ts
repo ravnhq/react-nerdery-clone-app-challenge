@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
 
-function useAsync<T>(cb: () => Promise<T>, dependencies = []) {
+export function useAsync<T>(cb: () => Promise<T>, dependencies = []) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [data, setData] = useState<T | null>(null);
+    const [data, setData] = useState<T>();
 
     const callback = useCallback(() => {
         setLoading(true);
         setError(null);
-        setData(null);
+        setData(undefined);
 
         cb()
             .then(setData)
@@ -22,5 +22,3 @@ function useAsync<T>(cb: () => Promise<T>, dependencies = []) {
 
     return { loading, error, data };
 }
-
-export default useAsync;
