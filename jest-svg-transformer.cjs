@@ -21,7 +21,7 @@ module.exports = {
       Object.assign({}, props, {'data-file-name': ${name}.name})
     );
   }
-  module.exports = ${name};
+  module.exports.ReactComponent = ${name};
               `,
     };
   },
