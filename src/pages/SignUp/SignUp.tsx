@@ -15,6 +15,8 @@ import {
     StyledRadioButton,
 } from '../../components/Styles/RadioButton/RadioButton.styles';
 import { StyledDropdown } from '../../components/Styles/Inputs/Dropdown.styles';
+import { useAuthorizationContext } from '../../context/AuthorizationContext';
+import { ErrorBanner } from '../../components/ErrorBanner';
 
 const months = [
     { value: '00', label: 'Month' },
@@ -48,16 +50,22 @@ const SignUp: React.FunctionComponent = () => {
     const {
         register,
         handleSubmit,
-        setValue,
         formState: { errors },
     } = useForm<FormValues>();
+    const { signup, error } = useAuthorizationContext();
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
+        const newUser = {
+            email: data.email,
+            password: data.password,
+            name: data.profile_name,
+            birth_date: `${data.year}-${data.month}-${data.day}`,
+            gender: data.gender,
+        };
+
+        await signup(newUser);
     };
 
-    const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) =>
-        setValue('month', event.target.value);
     return (
         <StyledSignUpContainer>
             <StyledLogo href="/">
@@ -66,7 +74,7 @@ const SignUp: React.FunctionComponent = () => {
             <h2>Sign up for free to start listening.</h2>
             <StyledSignUp onSubmit={handleSubmit(onSubmit)}>
                 <h2>Sign up with your email address</h2>
-
+                {error && <ErrorBanner message={error} />}
                 <div>
                     <StyledLabel htmlFor="email">
                         What's your email?

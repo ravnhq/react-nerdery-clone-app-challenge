@@ -1,21 +1,25 @@
 import SignUp from './pages/SignUp/SignUp';
-import { AuthContextProvider } from './context/AuthContext';
 import Login from './pages/Login/Login';
 import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home/Home';
+import { AuthorizationContextProvider } from './context/AuthorizationContext';
 
 const history = createBrowserRouter([
     {
         path: '/login',
         element: (
-            <AuthContextProvider>
+            <AuthorizationContextProvider>
                 <Login />
-            </AuthContextProvider>
+            </AuthorizationContextProvider>
         ),
     },
     {
         path: '/signup',
-        element: <SignUp />,
+        element: (
+            <AuthorizationContextProvider>
+                <SignUp />
+            </AuthorizationContextProvider>
+        ),
     },
     {
         path: '/',
