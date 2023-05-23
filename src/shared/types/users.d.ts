@@ -1,7 +1,8 @@
 type User = {
-    name: string;
     email: string;
-    password: string;
+    name: string;
+    birth_date: string;
+    gender: string;
 };
 
 type UserLogin = Omit<User, 'name'>;
