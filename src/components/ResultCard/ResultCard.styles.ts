@@ -27,7 +27,8 @@ export const StyledCardContainer = styled.div`
     box-sizing: border-box;
     display: block;
     width: 168px;
-    max-height: 280px;
+    z-index: 0;
+    height: 200px;
     transition: background-color ease-in-out 200ms;
     border-radius: 8px;
     padding: 8px;
@@ -46,6 +47,7 @@ export const StyledCardContainer = styled.div`
 
 export const StyledCardHeader = styled.div`
     position: relative;
+    z-index: 1;
 
     img {
         object-fit: cover;
@@ -58,17 +60,21 @@ export const StyledCardHeader = styled.div`
 export const StyledCardBody = styled.div`
     color: white;
 
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-line-clamp: 3;
+
     & p {
         margin: 0;
+        font-size: 14px;
     }
 
     & span {
-        white-space: normal;
-        text-overflow: ellipsis;
         line-height: 1px;
-        font-size: 14px;
+        font-size: 12px;
         direction: ltr;
         color: rgb(167, 167, 167);
-        max-height: 44px;
     }
 `;
