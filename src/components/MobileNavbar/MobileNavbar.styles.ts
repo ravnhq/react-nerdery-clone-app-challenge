@@ -5,6 +5,7 @@ export const StyledMobileNavbar = styled.div`
     display: flex;
     justify-content: space-between;
     position: relative;
+    z-index: 99;
 
     img {
         width: 100px;
@@ -21,17 +22,22 @@ export const StyledNavBarContainer = styled.div`
     width: 100%;
     inset: 0;
     position: sticky;
+
+    @media ${({ theme }) => theme.breakpoints.md} {
+        display: none;
+    }
 `;
 
 export const StyledMenu = styled.div`
     position: absolute;
     background-color: black;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     box-sizing: border-box;
     padding: 56px 40px;
+    z-index: 90;
 
-    transition: all 0.3s ease-in-out;
+    transition: all 500ms ease-in-out;
     &[aria-expanded='true'] {
         opacity: 1;
         top: 0;
@@ -39,6 +45,6 @@ export const StyledMenu = styled.div`
 
     &[aria-expanded='false'] {
         opacity: 0;
-        top: -100%;
+        top: -100vh;
     }
 `;

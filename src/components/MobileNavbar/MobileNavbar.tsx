@@ -1,7 +1,5 @@
-import styled from 'styled-components';
 import { Turn as Hamburger } from 'hamburger-react';
 import { useState } from 'react';
-import { Link } from '../Link/index';
 import {
     StyledNavBarContainer,
     StyledMobileNavbar,
