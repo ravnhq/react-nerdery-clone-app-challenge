@@ -23,7 +23,11 @@ const history = createBrowserRouter([
     },
     {
         path: '/',
-        element: <Home />,
+        element: (
+            <AuthorizationContextProvider>
+                <Home />
+            </AuthorizationContextProvider>
+        ),
     },
 ]);
 

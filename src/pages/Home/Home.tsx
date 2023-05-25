@@ -11,8 +11,8 @@ const StyledH2 = styled.h2`
     margin-left: 20px;
     margin-bottom: 0px;
 `;
-const StyledContainer = styled.div`
-    z-index: auto;
+const StyledContainer = styled.section`
+    width: 100%;
 `;
 
 const Home = () => {
@@ -20,7 +20,24 @@ const Home = () => {
 
     return (
         <HomeLayout loading={loading}>
-            <MobileNavbar />
+            <StyledContainer>
+                {data && (
+                    <>
+                        <StyledH2>{data.message}</StyledH2>
+                        <StyledFlexContainer rowGap="20px" overflowX="scroll">
+                            {data.playlists.map((playlist) => (
+                                <ResultCard
+                                    id={playlist.id}
+                                    key={playlist.id}
+                                    name={playlist.name}
+                                    description={playlist.description}
+                                    image={playlist.image}
+                                />
+                            ))}
+                        </StyledFlexContainer>
+                    </>
+                )}
+            </StyledContainer>
             <StyledContainer>
                 {data && (
                     <>

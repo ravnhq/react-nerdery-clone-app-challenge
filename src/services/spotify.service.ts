@@ -31,7 +31,7 @@ export const getPlaylists = async (): Promise<PlaylistDataRaw> => {
 
     return {
         message: data.message,
-        playlists: data.playlists.items.map((playlist: PlaylistData) => ({
+        playlists: data.playlists.items.map((playlist) => ({
             description: playlist.description,
             id: playlist.id,
             image: playlist.images[0].url,
