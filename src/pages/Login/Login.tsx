@@ -12,8 +12,8 @@ import React from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
 import { StyledHeader } from '../../components/Styles/Login/Header.styles';
 import { ErrorLabel } from '../../components/ErrorLabel';
-import { useAuthContext } from '../../context/AuthContext';
 import { ErrorBanner } from '../../components/ErrorBanner';
+import { useAuthorizationContext } from '../../context/AuthorizationContext';
 
 type FormValues = {
     email: string;
@@ -52,14 +52,15 @@ const Login: React.FunctionComponent = () => {
             remember_me: true,
         },
     });
-    const { login, error, setError } = useAuthContext();
+    const { login, error } = useAuthorizationContext();
 
-    const onSubmit = (data: FormValues) => {
-        try {
-            login({ email: data.email, password: data.password });
-        } catch (e: any) {
-            setError(e.message);
-        }
+    const onSubmit = async (data: FormValues) => {
+        const loginData = {
+            email: data.email,
+            password: data.password,
+        };
+
+        await login(loginData);
     };
 
     const manualToggle = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -75,7 +76,7 @@ const Login: React.FunctionComponent = () => {
             </StyledHeader>
             <StyledForm role="form" onSubmit={handleSubmit(onSubmit)}>
                 <h1>Log in to Spotify</h1>
-                {Boolean(error) && <ErrorBanner message={error} />}
+                {error && <ErrorBanner message={error} />}
                 <div>
                     <div>
                         <StyledLabel htmlFor="email">
@@ -119,7 +120,7 @@ const Login: React.FunctionComponent = () => {
                     <StyledButton type="submit">Log In</StyledButton>
                     <StyledLink>
                         Don't have an account?
-                        <a href="/sign-in">Sign up for Spotify</a>
+                        <a href="/signup">Sign up for Spotify</a>
                     </StyledLink>
                 </div>
             </StyledForm>

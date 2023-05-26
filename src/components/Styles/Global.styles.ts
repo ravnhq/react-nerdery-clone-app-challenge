@@ -17,11 +17,11 @@ const StyledGlobal = createGlobalStyle`
         padding: 0;
     }
 
-    body {
+    body, html, #root {
         font-family: 'Gotham', sans-serif;
-        overflow-x: hidden;
         margin: 0;
-        background-color: ${({ theme }) => theme.colors.bg};
+        background-color: black;
+        height: 100%;
     };
 `;
 

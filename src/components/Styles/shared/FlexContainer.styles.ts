@@ -15,6 +15,7 @@ type Props = {
     rowGap?: string;
     marginTop?: string;
     marginBottom?: string;
+    overflowX?: string;
 };
 
 export const StyledFlexContainer = styled.div<Props>`
@@ -27,4 +28,10 @@ export const StyledFlexContainer = styled.div<Props>`
     row-gap: ${({ rowGap }) => rowGap || '0'};
     margin-top: ${({ marginTop }) => marginTop || '0'};
     margin-bottom: ${({ marginBottom }) => marginBottom || '0'};
+    overflow-x: ${({ overflowX }) => overflowX || 'visible'};
+
+    ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; /* make scrollbar transparent */
+    }
 `;
