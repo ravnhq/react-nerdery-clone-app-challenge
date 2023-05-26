@@ -1,7 +1,9 @@
 import { useAsync } from '../../hooks/useAsync';
-import { getPlaylists } from '../../services/spotify.service';
+import {
+    getFeaturedPlaylists,
+    getCategoryPlaylists,
+} from '../../services/spotify.service';
 import { ResultCard } from '../../components/ResultCard';
-import { MobileNavbar } from '../../components/MobileNavbar';
 import { HomeLayout } from '../../Layout/HomeLayout';
 import { StyledFlexContainer } from '../../components/Styles/shared/FlexContainer.styles';
 import styled from 'styled-components';
@@ -16,10 +18,13 @@ const StyledContainer = styled.section`
 `;
 
 const Home = () => {
-    const { data, loading } = useAsync(() => getPlaylists());
+    const { data, loading } = useAsync(() => getFeaturedPlaylists());
+    const { data: data2, loading: loading2 } = useAsync(() =>
+        getCategoryPlaylists('dinner'),
+    );
 
     return (
-        <HomeLayout loading={loading}>
+        <HomeLayout loading={loading && loading2}>
             <StyledContainer>
                 {data && (
                     <>
@@ -39,11 +44,11 @@ const Home = () => {
                 )}
             </StyledContainer>
             <StyledContainer>
-                {data && (
+                {data2 && (
                     <>
-                        <StyledH2>{data.message}</StyledH2>
+                        <StyledH2>Dinner</StyledH2>
                         <StyledFlexContainer rowGap="20px" overflowX="scroll">
-                            {data.playlists.map((playlist) => (
+                            {data2.playlists.map((playlist) => (
                                 <ResultCard
                                     id={playlist.id}
                                     key={playlist.id}
