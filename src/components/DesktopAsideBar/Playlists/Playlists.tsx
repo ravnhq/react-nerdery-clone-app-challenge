@@ -1,6 +1,14 @@
+import { useAsync } from '../../../hooks/useAsync';
 import { useAuthorizationContext } from '../../../context/AuthorizationContext';
+import {
+    createPlaylist,
+    getUserPlaylists,
+} from '../../../services/spotify.service';
 import { MdViewWeek, MdAdd } from 'react-icons/md';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
+import { Card } from './Card';
+import { StyledFlexContainer } from '../../../components/Styles/shared/FlexContainer.styles';
 
 const StyledPlaylistsContainer = styled.div`
     box-sizing: border-box;
@@ -40,12 +48,18 @@ const StyledPlaylistButton = styled.button`
 `;
 
 const Playlists = () => {
-    const { isAuth } = useAuthorizationContext();
+    const { isAuth, user } = useAuthorizationContext();
+    const navigate = useNavigate();
+    const { loading, data } = useAsync(() => getUserPlaylists(user?.id || 0));
 
-    const handleClick = () => {
+    const handleClick = async () => {
         if (!isAuth) {
             alert('You need to be logged in to create a playlist');
         }
+
+        const data = await createPlaylist(user?.id || 0);
+
+        navigate(`/playlist/${data.id}`);
     };
 
     return (
@@ -59,6 +73,23 @@ const Playlists = () => {
                     <MdAdd />
                 </StyledPlaylistButton>
             </StyledPlaylistHeader>
+            {isAuth && (
+                <>
+                    {loading && !data ? (
+                        <p>Loading...</p>
+                    ) : (
+                        <StyledFlexContainer flexDirection="column">
+                            {data?.map((playlist) => (
+                                <Card
+                                    key={playlist.id}
+                                    id={playlist.id}
+                                    name={playlist.name}
+                                />
+                            ))}
+                        </StyledFlexContainer>
+                    )}
+                </>
+            )}
         </StyledPlaylistsContainer>
     );
 };
