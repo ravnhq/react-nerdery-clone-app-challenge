@@ -56,7 +56,7 @@ const StyledImg = styled.img`
 const DesktopHeader = () => {
     const { isAuth, user } = useAuthorizationContext();
     return (
-        <StyledHeader transparent={!isAuth}>
+        <StyledHeader transparent={isAuth}>
             {isAuth ? (
                 <StyledFlexContainer alignItems="center" columnGap="12px">
                     <StyledImg
