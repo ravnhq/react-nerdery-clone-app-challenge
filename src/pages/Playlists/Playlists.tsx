@@ -4,20 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import { HomeLayout } from '../../Layout/HomeLayout';
 import {
     getUserPlaylistById,
-    searchTracks,
     getPlaylistTracks,
     addTrackToPlaylist,
     removeTrackFromPlaylist,
     deletePlaylistById,
     Track,
+    PlaylistInfo,
 } from '../../services/spotify.service';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { TrackCard } from '../../components/TrackCard';
 import { StyledFlexContainer } from '../../components/Styles/shared/FlexContainer.styles';
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdCreate } from 'react-icons/md';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-
+import PlaylistModal from '../../components/Modals/PlaylistModal';
 const PlaylistDataContainer = styled.div`
     display: flex;
     color: white;
@@ -76,6 +76,20 @@ const StyledPlaylistTrack = styled.div`
     padding-bottom: 32px;
 `;
 
+const defaultPlaylistInfo: PlaylistInfo = {
+    name: '',
+    description: '',
+    id: 0,
+    userId: 0,
+};
+
+const StyledButton = styled.button`
+    background-color: black;
+    padding: 10px;
+    text-align: center;
+    border-radius: 50%;
+`;
+
 const Playlist = () => {
     const { playlistId } = useParams();
     const [query, setQuery] = useState('');
@@ -83,7 +97,8 @@ const Playlist = () => {
     const [showSearch, setShowSearch] = useState(true);
     const deferredQuery = useDeferredValue(query);
     const [offset, setOffset] = useState(0);
-    const { loading, data } = useAsync(
+    const modalRef = useRef<HTMLDialogElement>(null);
+    const { loading, data, callback } = useAsync(
         () => getUserPlaylistById(parseInt(playlistId || '')),
         {
             dependencies: [playlistId],
@@ -118,10 +133,15 @@ const Playlist = () => {
         );
     };
 
+    console.log({
+        query,
+        deferredQuery,
+    });
+
     const observer = useRef<IntersectionObserver>();
 
     const lastTrackElementRef = useCallback(
-        (node: HTMLElement) => {
+        (node: HTMLDivElement) => {
             if (searchLoading) return;
 
             if (observer.current) observer.current.disconnect();
@@ -140,14 +160,31 @@ const Playlist = () => {
 
     return (
         <HomeLayout loading={loading}>
+            <PlaylistModal
+                ref={modalRef}
+                initialData={data || defaultPlaylistInfo}
+                onClose={() => {
+                    callback();
+                    modalRef.current?.close();
+                }}
+            />
             <PlaylistDataContainer>
                 <img src="/images/playlist.jpeg" alt={data?.name} />
                 <div>
                     <StyledPlaylistName>{data?.name}</StyledPlaylistName>
                     <p>{data?.description}</p>
-                    <button onClick={deletePlaylist}>
-                        <MdDelete />
-                    </button>
+                    <StyledFlexContainer columnGap="20px">
+                        <StyledButton onClick={deletePlaylist}>
+                            <MdDelete />
+                        </StyledButton>
+                        <StyledButton
+                            onClick={() => {
+                                modalRef.current?.showModal();
+                            }}
+                        >
+                            <MdCreate />
+                        </StyledButton>
+                    </StyledFlexContainer>
                 </div>
             </PlaylistDataContainer>
             <StyledPlaylistTrack>
