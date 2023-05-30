@@ -16,6 +16,7 @@ type Props = {
     marginTop?: string;
     marginBottom?: string;
     overflowX?: string;
+    width?: string;
 };
 
 export const StyledFlexContainer = styled.div<Props>`
@@ -29,6 +30,7 @@ export const StyledFlexContainer = styled.div<Props>`
     margin-top: ${({ marginTop }) => marginTop || '0'};
     margin-bottom: ${({ marginBottom }) => marginBottom || '0'};
     overflow-x: ${({ overflowX }) => overflowX || 'visible'};
+    width: ${({ width }) => width || 'auto'};
 
     ::-webkit-scrollbar {
         width: 0px;

@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Card } from './Card';
 import { StyledFlexContainer } from '../../../components/Styles/shared/FlexContainer.styles';
+import { useEffect } from 'react';
 
 const StyledPlaylistsContainer = styled.div`
     box-sizing: border-box;
@@ -50,7 +51,14 @@ const StyledPlaylistButton = styled.button`
 const Playlists = () => {
     const { isAuth, user } = useAuthorizationContext();
     const navigate = useNavigate();
-    const { loading, data } = useAsync(() => getUserPlaylists(user?.id || 0));
+    const { loading, data, callback } = useAsync(
+        () => getUserPlaylists(user?.id || 0),
+        { dependencies: [user], runOnMount: false },
+    );
+
+    useEffect(() => {
+        if (isAuth && user) callback();
+    }, [isAuth, user]);
 
     const handleClick = async () => {
         if (!isAuth) {
