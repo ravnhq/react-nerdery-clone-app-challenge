@@ -1,76 +1,47 @@
 {
-    "users": [
-        {
-            "email": "olivie123r@mail.com",
-            "password": "$2a$10$4Q8hIJrxtVa2a3P9cV8fDOVILhXsglgkoH0JZPG47pC6VJ9wQ0FAi",
-            "name": "Petter",
-            "birth_date": "1988-12-02",
-            "gender": "Female",
-            "id": 1
-        },
-        {
-            "email": "olivier@mail.com",
-            "password": "$2a$10$ECxkCcu3jeawQZyvQuUd5eXis8AxwCy1/E29S6eS09/zBsBkgNrqO",
-            "name": "Jake Griffin",
-            "birth_date": "1988-12-02",
-            "gender": "Male",
-            "id": 2
-        }
-    ],
-    "playlists": [
-        {
-            "userId": 2,
-            "name": "Euphoric Escapes",
-            "description": "",
-            "id": 4
-        },
-        {
-            "userId": 2,
-            "name": "Late Night Vibes",
-            "description": "",
-            "id": 5
-        },
-        {
-            "userId": 2,
-            "name": "Retro Rewind",
-            "description": "",
-            "id": 6
-        },
-        {
-            "userId": 2,
-            "name": "Soulful Serenade",
-            "description": "",
-            "id": 7
-        },
-        {
-            "userId": 2,
-            "name": "Chillwave Chronicles",
-            "description": "",
-            "id": 8
-        },
-        {
-            "userId": 2,
-            "name": "Indie Introspection",
-            "description": "",
-            "id": 9
-        },
-        {
-            "userId": 2,
-            "name": "Upbeat Uprising",
-            "description": "",
-            "id": 10
-        },
-        {
-            "userId": 2,
-            "name": "Acoustic Bliss",
-            "description": "",
-            "id": 11
-        },
-        {
-            "userId": 2,
-            "name": "Electronic Euphoria",
-            "description": "",
-            "id": 12
-        }
-    ]
+  "users": [
+    {
+      "email": "olivie123r@mail.com",
+      "password": "$2a$10$4Q8hIJrxtVa2a3P9cV8fDOVILhXsglgkoH0JZPG47pC6VJ9wQ0FAi",
+      "name": "Petter",
+      "birth_date": "1988-12-02",
+      "gender": "Female",
+      "id": 1
+    },
+    {
+      "email": "olivier@mail.com",
+      "password": "$2a$10$ECxkCcu3jeawQZyvQuUd5eXis8AxwCy1/E29S6eS09/zBsBkgNrqO",
+      "name": "Jake Griffin",
+      "birth_date": "1988-12-02",
+      "gender": "Male",
+      "id": 2
+    }
+  ],
+  "playlists": [
+    {
+      "userId": 2,
+      "name": "Soulful Serenade",
+      "description": "",
+      "id": 7
+    },
+    {
+      "userId": 2,
+      "name": "Chillwave Chronicles",
+      "description": "",
+      "id": 8
+    },
+    {
+      "userId": 2,
+      "name": "Indie Introspection",
+      "description": "",
+      "id": 9
+    },
+    {
+      "userId": 2,
+      "name": "Upbeat Uprising",
+      "description": "",
+      "id": 10
+    }
+  ],
+  "tracks": []
 }

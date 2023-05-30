@@ -4,7 +4,7 @@ import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 
 interface Props {
-    active: boolean;
+    active: string;
 }
 
 const StyledLink = styled(Link)<Props>`
@@ -33,11 +33,14 @@ const Navbar = () => {
 
     return (
         <StyledList>
-            <StyledLink to="/" active={pathname === '/'}>
+            <StyledLink to="/" active={(pathname === '/').toString()}>
                 <MdOutlineCottage />
                 <span>Home</span>
             </StyledLink>
-            <StyledLink to="/search" active={pathname === '/search'}>
+            <StyledLink
+                to="/search"
+                active={(pathname === '/search').toString()}
+            >
                 <MdSearch />
                 <span>Search</span>
             </StyledLink>
