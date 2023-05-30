@@ -24,7 +24,7 @@ interface PlaylistDataRaw {
     playlists: Playlist[];
 }
 
-interface PlaylistInfo {
+export interface PlaylistInfo {
     id: number;
     userId: number;
     name: string;
@@ -220,4 +220,10 @@ export const searchTracksPaginated = async (
 
 export const deletePlaylistById = async (id: number) => {
     return mockedApiInstance.delete(`/playlists/${id}`);
+};
+
+export const editPlaylistInfo = async (form: PlaylistInfo) => {
+    return mockedApiInstance.put(`/playlists/${form.id}`, {
+        ...form,
+    });
 };

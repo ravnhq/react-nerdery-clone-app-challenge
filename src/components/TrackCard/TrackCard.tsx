@@ -51,28 +51,30 @@ const StyledButton = styled.button`
     color: white;
 `;
 
-const TrackCard = forwardRef(({ track, action, actionText }: Props, ref) => {
-    return (
-        <StyledTrackCard ref={ref}>
-            <StyledFlexContainer alignItems="center">
-                <StyledImage
-                    src={track.album.image}
-                    alt={`${track.album.name} cover`}
-                />
-                <div>
-                    <StyledP color="white">{track.name}</StyledP>
-                    <StyledP>{track.artist}</StyledP>
-                </div>
-            </StyledFlexContainer>
-            <StyledP>{track.album.name}</StyledP>
-            <StyledP>{formatMillisecondsToTime(track.duration_ms)}</StyledP>
-            {action && (
-                <StyledButton type="button" onClick={action}>
-                    {actionText}
-                </StyledButton>
-            )}
-        </StyledTrackCard>
-    );
-});
+const TrackCard = forwardRef<HTMLDivElement, Props>(
+    ({ track, action, actionText }, ref) => {
+        return (
+            <StyledTrackCard ref={ref}>
+                <StyledFlexContainer alignItems="center">
+                    <StyledImage
+                        src={track.album.image}
+                        alt={`${track.album.name} cover`}
+                    />
+                    <div>
+                        <StyledP color="white">{track.name}</StyledP>
+                        <StyledP>{track.artist}</StyledP>
+                    </div>
+                </StyledFlexContainer>
+                <StyledP>{track.album.name}</StyledP>
+                <StyledP>{formatMillisecondsToTime(track.duration_ms)}</StyledP>
+                {action && (
+                    <StyledButton type="button" onClick={action}>
+                        {actionText}
+                    </StyledButton>
+                )}
+            </StyledTrackCard>
+        );
+    },
+);
 
 export default TrackCard;
