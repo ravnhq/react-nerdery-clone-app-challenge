@@ -20,7 +20,6 @@ const StyledDesktopLayout = styled.div`
 `;
 
 const StyledDiv = styled.div`
-    overflow: hidden;
     background: rgb(51, 25, 120);
     background: linear-gradient(
         180deg,
@@ -30,6 +29,11 @@ const StyledDiv = styled.div`
         #121212 30%
     );
     border-radius: 8px;
+    overflow-x: hidden;
+
+    & > * {
+        box-sizing: border-box;
+    }
 `;
 
 const HomeLayout: React.FunctionComponent<Props> = ({ children, loading }) => {
