@@ -30,7 +30,7 @@ const StyledCard = styled(Link)`
 
 const Card: React.FC<Props> = ({ id, name }) => {
     return (
-        <StyledCard to={`/playlist/${id}`}>
+        <StyledCard to={`/playlist/${id}`} reloadDocument>
             <img src="/images/playlist.jpeg" alt={name} />
             <p>{name}</p>
         </StyledCard>
