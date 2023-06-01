@@ -1,6 +1,6 @@
 import { StyledFlexContainer } from '../../components/Styles/shared/FlexContainer.styles';
 import { formatMillisecondsToTime } from '../../assets/scripts';
-import { Track } from '../../services/spotify.service';
+import { Track } from '../../shared/types/spotify';
 import styled from 'styled-components';
 import { forwardRef } from 'react';
 

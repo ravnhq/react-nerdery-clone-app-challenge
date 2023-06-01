@@ -20,14 +20,7 @@ const StyledDesktopLayout = styled.div`
 `;
 
 const StyledDiv = styled.div`
-    background: rgb(51, 25, 120);
-    background: linear-gradient(
-        180deg,
-        rgba(51, 25, 120, 1) 0%,
-        rgba(48, 21, 120, 1) 3%,
-        rgba(29, 14, 69, 1) 9%,
-        #121212 30%
-    );
+    background: #121212;
     border-radius: 8px;
     overflow-x: hidden;
 

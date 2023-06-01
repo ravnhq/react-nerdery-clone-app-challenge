@@ -65,7 +65,9 @@ const Playlists = () => {
             alert('You need to be logged in to create a playlist');
         }
 
-        const data = await createPlaylist(user?.id || 0);
+        const data = await createPlaylist(user?.id || 0).finally(() =>
+            callback(),
+        );
 
         navigate(`/playlist/${data.id}`);
     };

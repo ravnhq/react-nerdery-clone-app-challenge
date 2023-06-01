@@ -23,6 +23,10 @@ const StyledGlobal = createGlobalStyle`
         background-color: black;
         height: 100%;
     };
+
+    html {
+        color-scheme: dark;
+    }
 `;
 
 export { StyledGlobal };

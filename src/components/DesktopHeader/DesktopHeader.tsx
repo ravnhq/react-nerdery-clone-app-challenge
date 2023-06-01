@@ -8,6 +8,8 @@ interface Props {
 }
 
 const StyledHeader = styled.header<Props>`
+    position: sticky;
+    top: 0;
     width: 100%;
     background-color: ${({ theme, transparent }) =>
         transparent ? 'transparent' : theme.colors.bg};
