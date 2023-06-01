@@ -1,37 +1,99 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import axios, { Canceler } from 'axios';
-import { searchTracksPaginated } from '../services/spotify.service';
+import { searchItems } from '../services/spotify.service';
+import { SearchResponse, Filters } from '../shared/types/spotify';
 
-interface Params<T> {
-    callback: Promise<T>;
-    elementRef: React.MutableRefObject<HTMLElement | null>;
-    config: {
-        [key: string]: unknown;
-    };
+interface Params {
+    q: string;
+    type: Filters[];
 }
-function useInfiniteScroll(q: string, offset: number) {
+
+export function useInfiniteScroll(params: Params) {
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState<any[]>([]);
+    const [data, setData] = useState<SearchResponse>();
     const [hasMore, setHasMore] = useState(false);
+    const [offset, setOffset] = useState(0);
+
+    const observer = useRef<IntersectionObserver>();
+
+    const lastElement = useCallback(
+        (node: HTMLDivElement) => {
+            if (loading) return;
+
+            if (observer.current) observer.current.disconnect();
+
+            observer.current = new IntersectionObserver(
+                (entries) => {
+                    if (entries[0].isIntersecting && hasMore) {
+                        setOffset((prevOffset) => prevOffset + 20);
+                    }
+                },
+                {
+                    threshold: 0.25,
+                },
+            );
+
+            if (node) observer.current.observe(node);
+        },
+        [loading, hasMore],
+    );
 
     useEffect(() => {
-        setData([]);
-    }, [q]);
+        setData(undefined);
+
+        if (params.q === '') {
+            setOffset(0);
+        }
+    }, [params.q]);
 
     useEffect(() => {
         let cancel: Canceler;
-        searchTracksPaginated(
-            q,
-            { offset },
-            {
-                cancelToken: new axios.CancelToken((c) => (cancel = c)),
+        setLoading(true);
+        searchItems({
+            params: {
+                ...params,
+                offset,
             },
-        )
+            cancelToken: new axios.CancelToken((c) => (cancel = c)),
+        })
             .then((res) => {
-                setData((prevData) => {
-                    return [...prevData, ...res];
-                });
-                setHasMore(res.length > 0);
+                setData((prevData) => ({
+                    ...prevData,
+                    albums: {
+                        items: [
+                            ...(prevData?.albums?.items || []),
+                            ...(res.albums?.items || []),
+                        ],
+                        hasNext: Boolean(res.albums?.hasNext),
+                    },
+                    artists: {
+                        items: [
+                            ...(prevData?.artists?.items || []),
+                            ...(res.artists?.items || []),
+                        ],
+                        hasNext: Boolean(res.artists?.hasNext),
+                    },
+                    tracks: {
+                        items: [
+                            ...(prevData?.tracks?.items || []),
+                            ...(res.tracks?.items || []),
+                        ],
+                        hasNext: Boolean(res.tracks?.hasNext),
+                    },
+                    playlists: {
+                        items: [
+                            ...(prevData?.playlists?.items || []),
+                            ...(res.playlists?.items || []),
+                        ],
+                        hasNext: Boolean(res.playlists?.hasNext),
+                    },
+                }));
+                setHasMore(
+                    Boolean(res.albums?.hasNext) ||
+                        Boolean(res.artists?.hasNext) ||
+                        Boolean(res.tracks?.hasNext) ||
+                        Boolean(res.playlists?.hasNext),
+                );
                 setLoading(false);
             })
             .catch((e) => {
@@ -39,9 +101,7 @@ function useInfiniteScroll(q: string, offset: number) {
             });
 
         return () => cancel();
-    }, [q, offset]);
+    }, [params.q, offset]);
 
-    return { loading, data, hasMore };
+    return { loading, data, lastElement };
 }
-
-export default useInfiniteScroll;

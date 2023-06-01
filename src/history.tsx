@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import { AuthorizationContextProvider } from './context/AuthorizationContext';
 import Playlist from './pages/Playlists/Playlists';
+import Search from './pages/Search/Search';
 
 const history = createBrowserRouter([
     {
@@ -35,6 +36,14 @@ const history = createBrowserRouter([
         element: (
             <AuthorizationContextProvider>
                 <Playlist />
+            </AuthorizationContextProvider>
+        ),
+    },
+    {
+        path: '/search',
+        element: (
+            <AuthorizationContextProvider>
+                <Search />
             </AuthorizationContextProvider>
         ),
     },
