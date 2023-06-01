@@ -12,14 +12,10 @@ interface context {
     isAuth: boolean;
     login: (data: { email: string; password: string }) => void;
     logout: () => void;
-    signup: (data: SignUpUser) => void;
+    signup: (data: UserCreate) => void;
     user: User | null;
     error: string | undefined;
     loading: boolean;
-}
-
-interface SignUpUser extends User {
-    password: string;
 }
 
 const authContextDefaults: context = {
@@ -74,7 +70,7 @@ export const AuthorizationContextProvider: React.FC<PropsWithChildren> = ({
         localStorage.removeItem('user');
     };
 
-    const signup = async (data: SignUpUser) => {
+    const signup = async (data: UserCreate) => {
         await register(data)
             .then((res) => {
                 setUser(res.user);

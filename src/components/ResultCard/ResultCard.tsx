@@ -13,7 +13,7 @@ interface Props {
 }
 
 const ResultCard = forwardRef<HTMLDivElement, Props>(
-    ({ id, description, name, image }, ref) => (
+    ({ description, name, image }, ref) => (
         <StyledCardContainer ref={ref}>
             <StyledCardHeader>
                 <img src={image} alt={`${name} cover`} />

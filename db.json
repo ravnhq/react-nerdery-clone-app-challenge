@@ -15,6 +15,14 @@
       "birth_date": "1988-12-02",
       "gender": "Male",
       "id": 2
+    },
+    {
+      "email": "olivier123123@mail.com",
+      "password": "$2a$10$kjAoe3ufPrOsEQr5gHD/gupRzrpBvQlzksa9XBYaDcewE1vK2ldBu",
+      "name": "",
+      "birth_date": "1988-12-02",
+      "gender": "Male",
+      "id": 3
     }
   ],
   "playlists": [
@@ -41,6 +49,18 @@
       "name": "Upbeat Uprising",
       "description": "",
       "id": 10
+    },
+    {
+      "userId": 2,
+      "name": "New Playlist",
+      "description": "",
+      "id": 11
+    },
+    {
+      "userId": 2,
+      "name": "New Playlist",
+      "description": "",
+      "id": 12
     }
   ],
   "tracks": []

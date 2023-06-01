@@ -1,6 +1,5 @@
 import { TrackCard } from '../../components/TrackCard';
 import {
-    Track,
     removeTrackFromPlaylist,
     getPlaylistTracks,
     addTrackToPlaylist,
@@ -8,6 +7,7 @@ import {
 import { useAsync } from '../../hooks/useAsync';
 import styled from 'styled-components';
 import { PlaylistTrackSearch } from '../../components/PlaylistTrackSearch';
+import { Track } from 'shared/types/spotify';
 
 interface Props {
     playlistId: number;

@@ -1,8 +1,9 @@
 import { forwardRef, useEffect } from 'react';
-import { PlaylistInfo, editPlaylistInfo } from '../../services/spotify.service';
+import { editPlaylistInfo } from '../../services/spotify.service';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { MdClose } from 'react-icons/md';
+import { PlaylistInfo } from 'shared/types/spotify';
 
 interface Props {
     initialData: PlaylistInfo;

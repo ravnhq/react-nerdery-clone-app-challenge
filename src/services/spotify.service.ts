@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { mockedApiInstance, spotifyApiInstance } from './index';
 import {
     PlaylistDataRaw,
@@ -51,7 +51,14 @@ export const getCategoryPlaylists = async (categoryId: string) => {
     };
 };
 
-export const createPlaylist = async (userId: number) => {
+export const createPlaylist = async (
+    userId: number,
+): Promise<{
+    id: number;
+    name: string;
+    description: string;
+    userId: number;
+}> => {
     return mockedApiInstance.post('/playlists', {
         userId,
         name: 'New Playlist',

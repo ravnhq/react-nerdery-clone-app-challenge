@@ -5,10 +5,6 @@ export interface LoginVM {
     password: string;
 }
 
-interface SignUpUser extends User {
-    password: string;
-}
-
 interface AuthResponse {
     accessToken: string;
     user: User;
@@ -18,6 +14,6 @@ export const login = async (user: LoginVM): Promise<AuthResponse> => {
     return mockedApiInstance.post('/login', user);
 };
 
-export const register = async (user: SignUpUser): Promise<AuthResponse> => {
+export const register = async (user: UserCreate): Promise<AuthResponse> => {
     return mockedApiInstance.post('/register', user);
 };

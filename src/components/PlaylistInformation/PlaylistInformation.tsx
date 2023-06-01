@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { useRef } from 'react';
 import { useAuthorizationContext } from '../../context/AuthorizationContext';
 import {
-    PlaylistInfo,
     deletePlaylistById,
     getUserPlaylistById,
 } from '../../services/spotify.service';
