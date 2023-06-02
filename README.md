@@ -34,7 +34,7 @@
 - React best practices
 - Form validation
 - Usage of Prettier and EsLint
-
+- Deploy app to cloud
  
  
 ## Bonus
