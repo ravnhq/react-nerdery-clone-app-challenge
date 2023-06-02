@@ -1,22 +1,29 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import axios, { Canceler } from 'axios';
-import { searchItems } from '../services/spotify.service';
-import { SearchResponse, Filters } from '../shared/types/spotify';
-
-interface Params {
-    q: string;
-    type: Filters[];
+import { useState, useEffect, useRef, useCallback, Dispatch } from 'react';
+interface InfiniteScrollParams<T> {
+    fn: () => Promise<T[]>;
+    dependencies: React.DependencyList;
+    resetDeps: React.DependencyList;
+    setNext: Dispatch<React.SetStateAction<number>>;
+    resetCondition: boolean;
+    step?: number;
 }
-// TODO: Make it so it receives a function ("Disconnect" from just spotify)
-export function useInfiniteScroll(params: Params) {
+
+export function useInfiniteScroll<T>({
+    fn,
+    dependencies,
+    resetDeps,
+    setNext,
+    resetCondition,
+    step = 20,
+}: InfiniteScrollParams<T>) {
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState<SearchResponse>();
+    const [data, setData] = useState<T[]>();
     const [hasMore, setHasMore] = useState(false);
-    const [offset, setOffset] = useState(0);
+    const [error, setError] = useState<Error | null>(null);
 
     const observer = useRef<IntersectionObserver>();
 
-    const lastElement = useCallback(
+    const lastElementRef = useCallback(
         (node: HTMLDivElement) => {
             if (loading) return;
 
@@ -25,7 +32,7 @@ export function useInfiniteScroll(params: Params) {
             observer.current = new IntersectionObserver(
                 (entries) => {
                     if (entries[0].isIntersecting && hasMore) {
-                        setOffset((prevOffset) => prevOffset + 20);
+                        setNext((prev) => prev + step);
                     }
                 },
                 {
@@ -40,68 +47,23 @@ export function useInfiniteScroll(params: Params) {
 
     useEffect(() => {
         setData(undefined);
-
-        if (params.q === '') {
-            setOffset(0);
-        }
-    }, [params.q]);
+        setNext(0);
+    }, resetDeps);
 
     useEffect(() => {
-        let cancel: Canceler;
+        if (resetCondition) {
+            return;
+        }
+
         setLoading(true);
-        searchItems({
-            params: {
-                ...params,
-                offset,
-            },
-            cancelToken: new axios.CancelToken((c) => (cancel = c)),
-        })
+        fn()
             .then((res) => {
-                setData((prevData) => ({
-                    ...prevData,
-                    albums: {
-                        items: [
-                            ...(prevData?.albums?.items || []),
-                            ...(res.albums?.items || []),
-                        ],
-                        hasNext: Boolean(res.albums?.hasNext),
-                    },
-                    artists: {
-                        items: [
-                            ...(prevData?.artists?.items || []),
-                            ...(res.artists?.items || []),
-                        ],
-                        hasNext: Boolean(res.artists?.hasNext),
-                    },
-                    tracks: {
-                        items: [
-                            ...(prevData?.tracks?.items || []),
-                            ...(res.tracks?.items || []),
-                        ],
-                        hasNext: Boolean(res.tracks?.hasNext),
-                    },
-                    playlists: {
-                        items: [
-                            ...(prevData?.playlists?.items || []),
-                            ...(res.playlists?.items || []),
-                        ],
-                        hasNext: Boolean(res.playlists?.hasNext),
-                    },
-                }));
-                setHasMore(
-                    Boolean(res.albums?.hasNext) ||
-                        Boolean(res.artists?.hasNext) ||
-                        Boolean(res.tracks?.hasNext) ||
-                        Boolean(res.playlists?.hasNext),
-                );
-                setLoading(false);
+                setData((prev) => [...(prev || []), ...res]);
+                setHasMore(res.length > 0);
             })
-            .catch((e) => {
-                if (axios.isCancel(e)) return;
-            });
+            .catch(setError)
+            .finally(() => setLoading(false));
+    }, dependencies);
 
-        return () => cancel();
-    }, [params.q, offset]);
-
-    return { loading, data, lastElement };
+    return { loading, data, lastElementRef, error };
 }
