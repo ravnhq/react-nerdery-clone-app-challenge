@@ -2,6 +2,9 @@
 
 # Project Assignment
 
+ ## Build a Airbnb clone app
+ ## Build a Spotity clone app
+
 # Tech Stack
 
 - JS library: React.js - TypeScript
@@ -10,7 +13,7 @@
 - Testing: Jest and React Testing Library
 - Control version: Git
 - State Management: ContextAPI - custom Hooks
-- BE/ mocked data. or public API (Spotity/Airbnb) - create signature/shape of the response (use Postman to test)
+- BE/ mocked data. or use a public API (Spotity/Airbnb)
 
 # MVP common Features
 
@@ -32,9 +35,6 @@
 - Form validation
 - Usage of Prettier and EsLint
 
-# Instructions
- ## Build a Airbnb clone app
- ## Build a Spotity clone app
  
  
 ## Bonus
