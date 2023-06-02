@@ -7,7 +7,7 @@ interface Params {
     q: string;
     type: Filters[];
 }
-
+// TODO: Make it so it receives a function ("Disconnect" from just spotify)
 export function useInfiniteScroll(params: Params) {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<SearchResponse>();

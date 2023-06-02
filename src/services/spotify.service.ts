@@ -13,7 +13,13 @@ export const getFeaturedPlaylists = async () => {
     const data: {
         message: string;
         playlists: { items: PlaylistDataRaw[] };
-    } = await (await spotifyApiInstance()).get('/browse/featured-playlists');
+    } = await (
+        await spotifyApiInstance()
+    ).get('/browse/featured-playlists', {
+        params: {
+            limit: 7,
+        },
+    });
 
     return {
         message: data.message,
@@ -35,7 +41,11 @@ export const getCategoryPlaylists = async (categoryId: string) => {
         playlists: { items: PlaylistDataRaw[] };
     } = await (
         await spotifyApiInstance()
-    ).get(`browse/categories/${categoryId}/playlists`);
+    ).get(`browse/categories/${categoryId}/playlists`, {
+        params: {
+            limit: 7,
+        },
+    });
 
     return {
         playlists: data.playlists.items.map((playlist) => {

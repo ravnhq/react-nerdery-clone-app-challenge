@@ -64,6 +64,7 @@ const PlaylistTrackSearch: React.FC<Props> = ({ action, showSearch }) => {
         setQuery('');
     }, [show]);
 
+    // TODO: RESEARCH DEBOUNCE AND IMPLEMENT IT FOR SEARCHES
     if (!show)
         return (
             <StyledSearchSection>

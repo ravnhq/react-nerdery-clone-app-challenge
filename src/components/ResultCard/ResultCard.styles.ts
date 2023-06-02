@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const StyledCardContainer = styled.div`
     box-sizing: border-box;
     display: block;
-    width: 268px;
-    height: 300px;
+    width: 168px;
+    height: 200px;
     transition: background-color ease-in-out 200ms;
     border-radius: 8px;
     padding: 14px;
@@ -32,16 +32,15 @@ export const StyledCardBody = styled.div`
     word-wrap: break-word;
     overflow: hidden;
     white-space: nowrap;
-    -webkit-line-clamp: 3;
 
     & p {
         margin: 0;
-        font-size: 20px;
+        font-size: 16px;
     }
 
     & span {
         line-height: 1px;
-        font-size: 16px;
+        font-size: 14px;
         direction: ltr;
         color: rgb(167, 167, 167);
     }

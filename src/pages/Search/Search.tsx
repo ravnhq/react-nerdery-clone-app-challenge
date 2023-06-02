@@ -6,11 +6,14 @@ import TracksSearch from '../../components/SearchResults/Tracks';
 import ArtistsSearch from '../../components/SearchResults/Artists';
 import AlbumsSearch from '../../components/SearchResults/Albums';
 import PlaylistsSearch from '../../components/SearchResults/Playlists';
+// TODO: Better to kind of do it this way (defintely try later)
+// TODO: Make playlist private
+import { useSearchParams } from 'react-router-dom';
 
 const StyledPageContainer = styled.section`
     padding: 0 16px;
 `;
-
+// TODO: Filters should be either a type or an enum
 const Search = () => {
     const [isPending, startTransition] = useTransition();
     const [search, setSearch] = useState('');
