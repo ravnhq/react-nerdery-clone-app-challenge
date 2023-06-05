@@ -1,31 +1,28 @@
-import { StyledFlexContainer } from '../../components/Styles/shared/FlexContainer.styles';
 import { useAuthorizationContext } from '../../context/AuthorizationContext';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { ProfileButton } from './ProfileButton';
 
 interface Props {
     transparent?: boolean;
+    hasChildren?: boolean;
 }
 
 const StyledHeader = styled.header<Props>`
     position: sticky;
     top: 0;
     width: 100%;
-    background-color: ${({ theme, transparent }) =>
-        transparent ? 'transparent' : theme.colors.bg};
+    background-color: #121212;
     color: white;
     display: flex;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    height: 50px;
+    padding-block: 10px;
+    align-items: flex-start;
+    padding-inline: 20px;
 
     display: flex;
-    justify-content: end;
+    justify-content: ${({ hasChildren }) =>
+        hasChildren ? 'space-between' : 'end'};
     align-items: center;
-
-    & > div {
-        margin-right: 20px;
-    }
 `;
 
 const StyledButton = styled(Link)`
@@ -55,24 +52,21 @@ const StyledImg = styled.img`
     border-radius: 50%;
 `;
 
-const DesktopHeader = () => {
+const DesktopHeader: React.FC<React.PropsWithChildren> = ({ children }) => {
     const { isAuth, user } = useAuthorizationContext();
     return (
-        <StyledHeader transparent={isAuth}>
-            {isAuth ? (
-                <StyledFlexContainer alignItems="center" columnGap="12px">
-                    <StyledImg
-                        src="https://source.unsplash.com/user/wsanter"
-                        alt={user?.name}
-                    />
-                    <span>{user?.name}</span>
-                </StyledFlexContainer>
-            ) : (
-                <div>
-                    <StyledButton to="/signup">Sign In</StyledButton>
-                    <StyledButton to="/login">Log In</StyledButton>
-                </div>
-            )}
+        <StyledHeader>
+            {children}
+            <>
+                {isAuth && user !== null ? (
+                    <ProfileButton />
+                ) : (
+                    <div>
+                        <StyledButton to="/signup">Sign In</StyledButton>
+                        <StyledButton to="/login">Log In</StyledButton>
+                    </div>
+                )}
+            </>
         </StyledHeader>
     );
 };

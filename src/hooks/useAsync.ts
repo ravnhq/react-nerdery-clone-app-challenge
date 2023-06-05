@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { AxiosError } from 'axios';
 
 interface useAsyncOptions {
     dependencies: React.DependencyList;
@@ -13,7 +14,7 @@ export function useAsync<T>(
     },
 ) {
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<AxiosError | null>();
     const [data, setData] = useState<T>();
 
     const { dependencies, runOnMount } = options;
