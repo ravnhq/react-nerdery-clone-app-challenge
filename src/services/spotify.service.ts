@@ -1,21 +1,35 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { mockedApiInstance, spotifyApiInstance } from './index';
 import {
     PlaylistDataRaw,
     PlaylistInfo,
     Track,
     TrackRaw,
-    SearchParams,
-    SearchResponseRaw,
+    AlbumDataRaw,
+    BaseDataRaw,
+    Playlist,
+    Artist,
+    Album,
 } from '../shared/types/spotify';
+
+let likedSongsIds: string[] | null = null;
+const loggedUser = JSON.parse(localStorage.getItem('user')!);
+
+export const fetchLikedTracks = async (userId: number) => {
+    const data: Track[] = await mockedApiInstance.get('/tracks', {
+        params: {
+            userId,
+            liked: true,
+        },
+    });
+
+    return data;
+};
 
 export const getFeaturedPlaylists = async () => {
     const data: {
         message: string;
         playlists: { items: PlaylistDataRaw[] };
-    } = await (
-        await spotifyApiInstance()
-    ).get('/browse/featured-playlists', {
+    } = await spotifyApiInstance().get('/browse/featured-playlists', {
         params: {
             limit: 7,
         },
@@ -39,13 +53,14 @@ export const getFeaturedPlaylists = async () => {
 export const getCategoryPlaylists = async (categoryId: string) => {
     const data: {
         playlists: { items: PlaylistDataRaw[] };
-    } = await (
-        await spotifyApiInstance()
-    ).get(`browse/categories/${categoryId}/playlists`, {
-        params: {
-            limit: 7,
+    } = await spotifyApiInstance().get(
+        `browse/categories/${categoryId}/playlists`,
+        {
+            params: {
+                limit: 7,
+            },
         },
-    });
+    );
 
     return {
         playlists: data.playlists.items.map((playlist) => {
@@ -99,9 +114,11 @@ export const getUserPlaylistById = async (id: number) => {
 };
 
 export const addTrackToPlaylist = async (playlistId: number, track: Track) => {
+    const num = Math.floor(1000 + Math.random() * 9000);
     return mockedApiInstance.post('/tracks', {
         playlistId,
         ...track,
+        id: track.id + num,
     });
 };
 
@@ -123,74 +140,6 @@ export const removeTrackFromPlaylist = async (id: string) => {
     return mockedApiInstance.delete(`/tracks/${id}`);
 };
 
-export const searchTracks = async (query: string) => {
-    const data: {
-        tracks: {
-            items: TrackRaw[];
-        };
-    } = await (
-        await spotifyApiInstance()
-    ).get('/search', {
-        params: {
-            q: query,
-            type: 'track',
-        },
-    });
-
-    return data.tracks.items.map((track) => {
-        const [image] = track.album.images;
-        const [artist] = track.album.artists;
-
-        return {
-            id: track.id,
-            name: track.name,
-            artist: artist.name,
-            album: {
-                name: track.album.name,
-                image: image.url,
-            },
-            duration_ms: track.duration_ms,
-        };
-    });
-};
-
-export const searchTracksPaginated = async (
-    query: string,
-    params: { offset: number },
-    config: AxiosRequestConfig,
-) => {
-    const data: {
-        tracks: {
-            items: TrackRaw[];
-        };
-    } = await (
-        await spotifyApiInstance()
-    ).get('/search', {
-        params: {
-            q: query,
-            type: 'track',
-            ...params,
-        },
-        ...config,
-    });
-
-    return data.tracks.items.map((track) => {
-        const [image] = track.album.images;
-        const [artist] = track.album.artists;
-
-        return {
-            id: track.id,
-            name: track.name,
-            artist: artist.name,
-            album: {
-                name: track.album.name,
-                image: image.url,
-            },
-            duration_ms: track.duration_ms,
-        };
-    });
-};
-
 export const deletePlaylistById = async (id: number) => {
     return mockedApiInstance.delete(`/playlists/${id}`);
 };
@@ -201,21 +150,33 @@ export const editPlaylistInfo = async (form: PlaylistInfo) => {
     });
 };
 
-export const searchItems = async (config: AxiosRequestConfig<SearchParams>) => {
-    const { params } = config;
+if (!likedSongsIds && loggedUser) {
+    likedSongsIds = await fetchLikedTracks(loggedUser.id).then((tracks) =>
+        tracks.map((track) => {
+            const { id } = track;
 
-    const data: SearchResponseRaw = await (
-        await spotifyApiInstance()
-    ).get('/search', {
-        ...config,
+            return id.substring(0, id.length - 4);
+        }),
+    );
+}
+
+export const fetchTracks = async (
+    q: string,
+    offset: number,
+): Promise<Track[]> => {
+    const data: {
+        tracks: {
+            items: TrackRaw[];
+        };
+    } = await spotifyApiInstance().get('/search', {
         params: {
-            q: params?.q,
-            type: params?.type.join(','),
-            offset: params?.offset,
+            q,
+            offset,
+            type: 'track',
         },
     });
 
-    const trackItems = data.tracks?.items.map((track) => {
+    return data.tracks.items.map((track) => {
         const [image] = track.album.images;
         const [artist] = track.album.artists;
 
@@ -228,10 +189,28 @@ export const searchItems = async (config: AxiosRequestConfig<SearchParams>) => {
                 image: image.url,
             },
             duration_ms: track.duration_ms,
+            liked: likedSongsIds?.includes(track.id),
         };
     });
+};
 
-    const albumItems = data.albums?.items.map((album) => {
+export const fetchAlbums = async (
+    q: string,
+    offset: number,
+): Promise<Album[]> => {
+    const data: {
+        albums: {
+            items: AlbumDataRaw[];
+        };
+    } = await spotifyApiInstance().get('/search', {
+        params: {
+            q,
+            offset,
+            type: 'album',
+        },
+    });
+
+    return data.albums.items.map((album) => {
         const [image] = album.images;
         const [artist] = album.artists;
         const { release_date } = album;
@@ -248,19 +227,25 @@ export const searchItems = async (config: AxiosRequestConfig<SearchParams>) => {
             image: image.url,
         };
     });
+};
 
-    const artistItems = data.artists?.items.map((artist) => {
-        const [image] = artist.images;
-
-        return {
-            id: artist.id,
-            name: artist.name,
-            image: image.url,
-            description: 'Artist',
+export const fetchPlaylists = async (
+    q: string,
+    offset: number,
+): Promise<Playlist[]> => {
+    const data: {
+        playlists: {
+            items: PlaylistDataRaw[];
         };
+    } = await spotifyApiInstance().get('/search', {
+        params: {
+            q,
+            offset,
+            type: 'playlist',
+        },
     });
 
-    const playlistItems = data.playlists?.items.map((playlist) => {
+    return data.playlists.items.map((playlist) => {
         const [image] = playlist.images;
 
         return {
@@ -270,23 +255,44 @@ export const searchItems = async (config: AxiosRequestConfig<SearchParams>) => {
             name: playlist.name,
         };
     });
+};
 
-    return {
-        tracks: data.tracks && {
-            items: trackItems,
-            hasNext: Boolean(data.tracks.next),
+export const fetchArtists = async (
+    q: string,
+    offset: number,
+): Promise<Artist[]> => {
+    const data: {
+        artists: {
+            items: BaseDataRaw[];
+        };
+    } = await spotifyApiInstance().get('/search', {
+        params: {
+            q,
+            offset,
+            type: 'artist',
         },
-        albums: data.albums && {
-            items: albumItems,
-            hasNext: Boolean(data.albums.next),
-        },
-        artists: data.artists && {
-            items: artistItems,
-            hasNext: Boolean(data.artists.next),
-        },
-        playlists: data.playlists && {
-            items: playlistItems,
-            hasNext: Boolean(data.playlists.next),
-        },
-    };
+    });
+
+    return data.artists.items.map((artist) => {
+        const [image] = artist.images;
+
+        return {
+            id: artist.id,
+            name: artist.name,
+            image: image.url,
+            description: 'Artist',
+        };
+    });
+};
+
+export const updateTrackInfo = async (track: Track) => {
+    return mockedApiInstance.put(`/tracks/${track.id}`, {
+        ...track,
+    });
+};
+
+export const createTrackInfo = async (track: Track) => {
+    return mockedApiInstance.post('/tracks', {
+        ...track,
+    });
 };

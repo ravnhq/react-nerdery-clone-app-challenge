@@ -1,46 +1,32 @@
-import { SearchBar } from '../../components/SearchBar';
-import { HomeLayout } from '../../Layout/HomeLayout';
 import styled from 'styled-components';
-import { useState, useTransition } from 'react';
 import TracksSearch from '../../components/SearchResults/Tracks';
 import ArtistsSearch from '../../components/SearchResults/Artists';
 import AlbumsSearch from '../../components/SearchResults/Albums';
 import PlaylistsSearch from '../../components/SearchResults/Playlists';
-// TODO: Better to kind of do it this way (defintely try later)
-// TODO: Make playlist private
 import { useSearchParams } from 'react-router-dom';
+// TODO: Make playlist private
+import useDebounceValue from '../../hooks/useDebounceValue';
+import { SearchLayout } from '../../Layout/SearchLayout';
+import { SearchType } from '../../components/SearchBar/SearchBar';
 
 const StyledPageContainer = styled.section`
     padding: 0 16px;
 `;
-// TODO: Filters should be either a type or an enum
 const Search = () => {
-    const [isPending, startTransition] = useTransition();
-    const [search, setSearch] = useState('');
-    const [tab, setTab] = useState('album');
-
-    function handleTabChange(tab: string) {
-        startTransition(() => {
-            setTab(tab);
-        });
-    }
+    const [searchParams] = useSearchParams();
+    const query = searchParams.get('q') || '';
+    const tab = searchParams.get('type') || SearchType.Album;
+    const q = useDebounceValue(query, 500);
 
     return (
-        <HomeLayout loading={false}>
+        <SearchLayout>
             <StyledPageContainer>
-                <SearchBar
-                    search={search}
-                    setSearch={setSearch}
-                    tab={tab}
-                    setTab={(s) => handleTabChange(s)}
-                />
-
-                {tab === 'track' && <TracksSearch q={search} />}
-                {tab === 'artist' && <ArtistsSearch q={search} />}
-                {tab === 'album' && <AlbumsSearch q={search} />}
-                {tab === 'playlist' && <PlaylistsSearch q={search} />}
+                {tab === SearchType.Track && <TracksSearch q={q} />}
+                {tab === SearchType.Artist && <ArtistsSearch q={q} />}
+                {tab === SearchType.Album && <AlbumsSearch q={q} />}
+                {tab === SearchType.Playlist && <PlaylistsSearch q={q} />}
             </StyledPageContainer>
-        </HomeLayout>
+        </SearchLayout>
     );
 };
 

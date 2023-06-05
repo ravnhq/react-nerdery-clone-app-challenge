@@ -5,6 +5,12 @@ export interface Response {
     image: string;
 }
 
+export interface Playlist extends Response {}
+
+export interface Album extends Response {}
+
+export interface Artist extends Response {}
+
 export interface BaseDataRaw {
     id: string;
     name: string;
@@ -39,6 +45,8 @@ export interface Track {
     artist: string;
     album: { name: string; image: string };
     duration_ms: number;
+    liked?: boolean;
+    playlistId?: number;
 }
 
 export type Filters = 'album' | 'track' | 'artist' | 'playlist';
@@ -47,16 +55,6 @@ export type SearchParams = {
     q: string;
     type: Filters[];
     offset: number;
-};
-
-type ResponseStructure<T> = {
-    items: T[];
-    next: string | null;
-};
-
-type ResponsePaginated<T> = {
-    items?: T[];
-    hasNext: boolean;
 };
 
 export interface TrackRaw {
@@ -72,17 +70,4 @@ export interface TrackRaw {
         }[];
     };
     duration_ms: number;
-}
-export interface SearchResponseRaw {
-    albums?: ResponseStructure<AlbumDataRaw>;
-    artists?: ResponseStructure<BaseDataRaw>;
-    tracks?: ResponseStructure<TrackRaw>;
-    playlists?: ResponseStructure<PlaylistDataRaw>;
-}
-
-export interface SearchResponse {
-    albums?: ResponsePaginated<Response>;
-    artists?: ResponsePaginated<Response>;
-    tracks?: ResponsePaginated<Track>;
-    playlists?: ResponsePaginated<Response>;
 }

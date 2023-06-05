@@ -6,6 +6,7 @@ export enum EApiRoutes {
 }
 
 let accessToken: string | null = null;
+const mockAccessToken = window.localStorage.getItem('access_token');
 
 const createInstance = (api: EApiRoutes, options = {}) => {
     const instance = axios.create({
@@ -20,6 +21,7 @@ const createInstance = (api: EApiRoutes, options = {}) => {
 
     return instance;
 };
+
 const getSpotifyToken = async () => {
     try {
         const data = await axios.post(
@@ -43,13 +45,17 @@ const getSpotifyToken = async () => {
     }
 };
 
-export const mockedApiInstance = createInstance(EApiRoutes.MockApi);
+if (!accessToken) {
+    accessToken = await getSpotifyToken();
+}
 
-export const spotifyApiInstance = async () => {
-    if (!accessToken) {
-        accessToken = await getSpotifyToken();
-    }
+export const mockedApiInstance = createInstance(EApiRoutes.MockApi, {
+    headers: {
+        Authorization: mockAccessToken ? `Bearer ${mockAccessToken}` : null,
+    },
+});
 
+export const spotifyApiInstance = () => {
     return createInstance(EApiRoutes.SpotifyApi, {
         headers: {
             Authorization: `Bearer ${accessToken}`,

@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { Card } from './Card';
 import { StyledFlexContainer } from '../../../components/Styles/shared/FlexContainer.styles';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const StyledPlaylistsContainer = styled.div`
     box-sizing: border-box;
@@ -44,6 +45,28 @@ const StyledPlaylistButton = styled.button`
     border-radius: 8px;
 
     &:hover {
+        background-color: #282828;
+    }
+`;
+
+const StyledLinkCard = styled(Link)`
+    border-radius: 8px;
+    padding: 5px;
+    box-sizing: border-box;
+    column-gap: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 14px;
+
+    img {
+        border-radius: 8px;
+        width: 48px;
+        height: 48px;
+        aspect-ratio: 1/1;
+    }
+
+    :hover {
         background-color: #282828;
     }
 `;
@@ -83,6 +106,13 @@ const Playlists = () => {
                     <MdAdd />
                 </StyledPlaylistButton>
             </StyledPlaylistHeader>
+            <StyledLinkCard to="/liked">
+                <img
+                    src="https://misc.scdn.co/liked-songs/liked-songs-640.png"
+                    alt=""
+                />
+                <p>Liked Songs</p>
+            </StyledLinkCard>
             {isAuth && (
                 <>
                     {loading && !data ? (

@@ -5,6 +5,9 @@ import Home from './pages/Home/Home';
 import { AuthorizationContextProvider } from './context/AuthorizationContext';
 import Playlist from './pages/Playlists/Playlists';
 import Search from './pages/Search/Search';
+import ErrorBoundary from './components/ErrorBOundary';
+import { NotFound } from './components/NotFound';
+import Liked from './pages/Liked/Liked';
 
 const history = createBrowserRouter([
     {
@@ -34,16 +37,30 @@ const history = createBrowserRouter([
     {
         path: '/playlist/:playlistId',
         element: (
+            <ErrorBoundary>
+                <AuthorizationContextProvider>
+                    <Playlist />
+                </AuthorizationContextProvider>
+            </ErrorBoundary>
+        ),
+    },
+    {
+        path: '/search/*',
+        element: (
             <AuthorizationContextProvider>
-                <Playlist />
+                <Search />
             </AuthorizationContextProvider>
         ),
     },
     {
-        path: '/search',
+        path: '*',
+        element: <NotFound />,
+    },
+    {
+        path: '/liked',
         element: (
             <AuthorizationContextProvider>
-                <Search />
+                <Liked />
             </AuthorizationContextProvider>
         ),
     },
