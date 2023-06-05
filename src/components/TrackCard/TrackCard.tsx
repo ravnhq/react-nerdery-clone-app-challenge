@@ -1,8 +1,14 @@
 import { StyledFlexContainer } from '../../components/Styles/shared/FlexContainer.styles';
+import { MdFavoriteBorder, MdFavorite } from 'react-icons/md';
 import { formatMillisecondsToTime } from '../../assets/scripts';
 import { Track } from '../../shared/types/spotify';
 import styled from 'styled-components';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
+import { useAuthorizationContext } from '../../context/AuthorizationContext';
+import {
+    updateTrackInfo,
+    createTrackInfo,
+} from '../../services/spotify.service';
 
 interface Props {
     track: Track;
@@ -15,6 +21,10 @@ const StyledTrackCard = styled.div`
     padding: 16px;
     align-items: center;
     justify-content: space-between;
+
+    svg {
+        fill: ${({ theme }) => theme.colors.primary};
+    }
 
     &:hover {
         background-color: #282828;
@@ -53,6 +63,27 @@ const StyledButton = styled.button`
 
 const TrackCard = forwardRef<HTMLDivElement, Props>(
     ({ track, action, actionText }, ref) => {
+        const { user, isAuth } = useAuthorizationContext();
+        const [trackLiked, setTrackLicked] = useState(track.liked);
+
+        const handleFavoriteButtonClick = () => {
+            if (!isAuth && !user) return;
+
+            if (track.playlistId) {
+                updateTrackInfo({
+                    ...track,
+                    liked: !track.liked,
+                });
+            } else {
+                createTrackInfo({
+                    ...track,
+                    liked: true,
+                });
+            }
+
+            setTrackLicked(!trackLiked);
+        };
+
         return (
             <StyledTrackCard ref={ref}>
                 <StyledFlexContainer alignItems="center">
@@ -67,6 +98,9 @@ const TrackCard = forwardRef<HTMLDivElement, Props>(
                 </StyledFlexContainer>
                 <StyledP>{track.album.name}</StyledP>
                 <StyledP>{formatMillisecondsToTime(track.duration_ms)}</StyledP>
+                <button onClick={handleFavoriteButtonClick}>
+                    {trackLiked ? <MdFavorite /> : <MdFavoriteBorder />}
+                </button>
                 {action && (
                     <StyledButton type="button" onClick={action}>
                         {actionText}

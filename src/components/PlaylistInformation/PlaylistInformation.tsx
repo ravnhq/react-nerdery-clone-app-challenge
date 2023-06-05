@@ -21,7 +21,6 @@ const PlaylistDataContainer = styled.div`
     column-gap: 32px;
     align-items: center;
     margin: 32px;
-    cursor: pointer;
 
     img {
         width: 192px;
@@ -50,6 +49,7 @@ const PlaylistInformation: React.FC<Props> = ({ playlistId }) => {
     const {
         data: playlistData,
         loading,
+        error,
         callback: fetchPlaylistData,
     } = useAsync(() => getUserPlaylistById(playlistId), {
         dependencies: [playlistId],
@@ -67,6 +67,7 @@ const PlaylistInformation: React.FC<Props> = ({ playlistId }) => {
         deletePlaylistById(playlistData.id).then(() => navigate('/'));
     };
 
+    if (error) throw new Error(error.message || "Couldn't fetch playlist data");
     if (loading) return <div>Loading...</div>;
 
     if (!playlistData) return null;

@@ -4,6 +4,8 @@ import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { TrackCard } from '../../components/TrackCard';
 import styled from 'styled-components';
 import { Track } from '../../shared/types/spotify';
+import useDebounceValue from '../../hooks/useDebounceValue';
+import { fetchTracks } from '../../services/spotify.service';
 
 interface Props {
     action: (t: Track) => void;
@@ -51,20 +53,22 @@ const StyledTrackList = styled.div`
 const PlaylistTrackSearch: React.FC<Props> = ({ action, showSearch }) => {
     const [show, setShow] = useState(showSearch);
     const [query, setQuery] = useState('');
-    const {
-        data: searchData,
-        loading: searchLoading,
-        lastElement,
-    } = useInfiniteScroll({
-        q: query,
-        type: ['track'],
+    const [offset, setOffset] = useState(0);
+
+    const q = useDebounceValue(query);
+
+    const { data: searchData, lastElementRef } = useInfiniteScroll({
+        fn: () => fetchTracks(q, offset),
+        setNext: setOffset,
+        dependencies: [q, offset],
+        resetCondition: q === '',
+        resetDeps: [query],
     });
 
     useEffect(() => {
         setQuery('');
     }, [show]);
 
-    // TODO: RESEARCH DEBOUNCE AND IMPLEMENT IT FOR SEARCHES
     if (!show)
         return (
             <StyledSearchSection>
@@ -97,28 +101,20 @@ const PlaylistTrackSearch: React.FC<Props> = ({ action, showSearch }) => {
                 placeholder="Search for songs"
             />
             <StyledTrackList>
-                {searchData?.tracks?.items?.map((track, index) => {
-                    if (searchData?.tracks?.items?.length === index + 1) {
-                        return (
-                            <TrackCard
-                                key={track.id}
-                                track={track}
-                                action={() => action(track)}
-                                actionText="Add"
-                                ref={lastElement}
-                            />
-                        );
-                    } else {
-                        return (
-                            <TrackCard
-                                key={track.id}
-                                track={track}
-                                action={() => action(track)}
-                                actionText="Add"
-                            />
-                        );
-                    }
-                })}
+                {searchData &&
+                    searchData.map((track, index) => (
+                        <TrackCard
+                            key={track.id}
+                            track={track}
+                            ref={
+                                searchData.length === index + 1
+                                    ? lastElementRef
+                                    : undefined
+                            }
+                            action={() => action(track)}
+                            actionText="+"
+                        />
+                    ))}
             </StyledTrackList>
         </StyledSearchSection>
     );
