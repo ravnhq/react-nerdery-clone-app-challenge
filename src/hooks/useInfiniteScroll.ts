@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback, Dispatch } from 'react';
+
 interface InfiniteScrollParams<T> {
     fn: () => Promise<T[]>;
     dependencies: React.DependencyList;
@@ -58,7 +59,7 @@ export function useInfiniteScroll<T>({
         setLoading(true);
         fn()
             .then((res) => {
-                setData((prev) => [...(prev || []), ...res]);
+                setData((prev) => [...new Set([...(prev || []), ...res])]);
                 setHasMore(res.length > 0);
             })
             .catch(setError)

@@ -1,14 +1,8 @@
 import styled from 'styled-components';
 import { MdSearch } from 'react-icons/md';
 import { StyledFlexContainer } from '../../components/Styles/shared/FlexContainer.styles';
-import { Dispatch, forwardRef } from 'react';
-
-interface Props {
-    tab: string;
-    setTab: (str: string) => void;
-    search: string;
-    setSearch: Dispatch<React.SetStateAction<string>>;
-}
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const StyledSearchInput = styled.input`
     background-color: transparent;
@@ -50,52 +44,68 @@ const StyledPill = styled.label<{ current: boolean }>`
 `;
 
 const SearchBarContainer = styled.div`
-    position: sticky;
     top: 0;
-    width: 100%;
-    background-color: #121212;
+    flex-grow: 1;
     padding: 20px 0;
 `;
 
-type Search = {
-    tab: string;
-    q: string;
-};
+export enum SearchType {
+    Album = 'album',
+    Track = 'track',
+    Artist = 'artist',
+    Playlist = 'playlist',
+}
 
-const SearchBar: React.FC<Props> = ({ tab, setTab, search, setSearch }) => {
+const SearchBar = () => {
+    const [searchParams, setSearchParams] = useSearchParams({
+        q: '',
+        type: SearchType.Album,
+    });
+
+    const q = searchParams.get('q') || '';
+    const tab = (searchParams.get('type') as SearchType) || SearchType.Album;
+
+    const handleTypeChange = (type: SearchType) => {
+        searchParams.set('type', type);
+        setSearchParams(searchParams);
+    };
+
     return (
         <SearchBarContainer>
             <StyledSearchForm>
                 <MdSearch size={20} />
                 <StyledSearchInput
                     type="text"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    value={q}
+                    onChange={(e) => {
+                        searchParams.set('q', e.target.value);
+                        setSearchParams(searchParams);
+                    }}
                     placeholder="What do you want to listen to?"
                 />
             </StyledSearchForm>
             <StyledFlexContainer columnGap="18px" marginTop="16px">
                 <StyledPill
                     current={tab === 'album'}
-                    onClick={() => setTab('album')}
+                    onClick={() => handleTypeChange(SearchType.Album)}
                 >
                     Albums
                 </StyledPill>
                 <StyledPill
                     current={tab === 'track'}
-                    onClick={() => setTab('track')}
+                    onClick={() => handleTypeChange(SearchType.Track)}
                 >
                     Songs
                 </StyledPill>
                 <StyledPill
                     current={tab === 'artist'}
-                    onClick={() => setTab('artist')}
+                    onClick={() => handleTypeChange(SearchType.Artist)}
                 >
                     Artists
                 </StyledPill>
                 <StyledPill
                     current={tab === 'playlist'}
-                    onClick={() => setTab('playlist')}
+                    onClick={() => handleTypeChange(SearchType.Playlist)}
                 >
                     Playlists
                 </StyledPill>
