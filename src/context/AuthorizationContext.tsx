@@ -68,6 +68,7 @@ export const AuthorizationContextProvider: React.FC<PropsWithChildren> = ({
         setUser(null);
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
+        navigate('/');
     };
 
     const signup = async (data: UserCreate) => {
@@ -76,7 +77,7 @@ export const AuthorizationContextProvider: React.FC<PropsWithChildren> = ({
                 setUser(res.user);
                 localStorage.setItem('access_token', res.accessToken);
                 setIsAuth(true);
-                navigate('/');
+                navigate('/?new');
             })
             .catch((err) => {
                 setError(err.response.data);
