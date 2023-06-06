@@ -1,3 +1,0 @@
-{
-    "buildCommand": "concurrently \"vite build\" \" json-server-auth db.json -w\""
-}
