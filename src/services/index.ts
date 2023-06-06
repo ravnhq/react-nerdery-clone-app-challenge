@@ -23,26 +23,21 @@ const createInstance = (api: EApiRoutes, options = {}) => {
 };
 
 const getSpotifyToken = async () => {
-    try {
-        const data = await axios.post(
-            'https://accounts.spotify.com/api/token',
-            {
-                grant_type: 'client_credentials',
-                client_id: import.meta.env.VITE_CLIENT_ID,
-                client_secret: import.meta.env.VITE_CLIENT_SECRET,
+    const data = await axios.post(
+        'https://accounts.spotify.com/api/token',
+        {
+            grant_type: 'client_credentials',
+            client_id: import.meta.env.VITE_CLIENT_ID,
+            client_secret: import.meta.env.VITE_CLIENT_SECRET,
+        },
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
-            {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-            },
-        );
+        },
+    );
 
-        return data.data.access_token;
-    } catch (err) {
-        console.log(err);
-        throw err;
-    }
+    return data.data.access_token;
 };
 
 if (!accessToken) {
