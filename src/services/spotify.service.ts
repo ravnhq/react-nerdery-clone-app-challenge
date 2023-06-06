@@ -152,12 +152,13 @@ export const editPlaylistInfo = async (form: PlaylistInfo) => {
 };
 
 if (!likedSongsIds && loggedUser) {
-    likedSongsIds = await fetchLikedTracks(loggedUser.id).then((tracks) =>
-        tracks.map((track) => {
-            const { id } = track;
+    fetchLikedTracks(loggedUser.id).then(
+        (tracks) =>
+            (likedSongsIds = tracks.map((track) => {
+                const { id } = track;
 
-            return id.substring(0, id.length - 4);
-        }),
+                return id.substring(0, id.length - 4);
+            })),
     );
 }
 

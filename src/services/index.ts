@@ -46,7 +46,9 @@ const getSpotifyToken = async () => {
 };
 
 if (!accessToken) {
-    accessToken = await getSpotifyToken();
+    getSpotifyToken().then((token) => {
+        accessToken = token;
+    });
 }
 
 export const mockedApiInstance = createInstance(EApiRoutes.MockApi, {
