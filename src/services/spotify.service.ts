@@ -9,6 +9,7 @@ import {
     Playlist,
     Artist,
     Album,
+    Category,
 } from '../shared/types/spotify';
 
 let likedSongsIds: string[] | null = null;
@@ -294,5 +295,31 @@ export const updateTrackInfo = async (track: Track) => {
 export const createTrackInfo = async (track: Track) => {
     return mockedApiInstance.post('/tracks', {
         ...track,
+    });
+};
+
+export const fetchCategories = async (): Promise<Category[]> => {
+    const data: {
+        categories: {
+            items: {
+                id: string;
+                name: string;
+                icons: { url: string }[];
+            }[];
+        };
+    } = await spotifyApiInstance().get('/browse/categories', {
+        params: {
+            limit: 49,
+        },
+    });
+
+    return data.categories.items.map((category) => {
+        const [image] = category.icons;
+
+        return {
+            id: category.id,
+            name: category.name,
+            image: image.url,
+        };
     });
 };

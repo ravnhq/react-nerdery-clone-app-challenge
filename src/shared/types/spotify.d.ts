@@ -71,3 +71,9 @@ export interface TrackRaw {
     };
     duration_ms: number;
 }
+
+export interface Category {
+    id: string;
+    name: string;
+    image: string;
+}

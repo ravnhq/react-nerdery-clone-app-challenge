@@ -7,6 +7,7 @@ import { ResultCard } from '../../components/ResultCard';
 import { HomeLayout } from '../../Layout/HomeLayout';
 import { StyledFlexContainer } from '../../components/Styles/shared/FlexContainer.styles';
 import styled from 'styled-components';
+import { Onboarding } from '../../components/Onboarding';
 
 const StyledH2 = styled.h2`
     color: white;
@@ -25,42 +26,51 @@ const Home = () => {
 
     return (
         <HomeLayout loading={loading && loading2}>
-            <StyledContainer>
-                {data && (
-                    <>
-                        <StyledH2>{data.message}</StyledH2>
-                        <StyledFlexContainer rowGap="20px" overflowX="scroll">
-                            {data.playlists.map((playlist) => (
-                                <ResultCard
-                                    id={playlist.id}
-                                    key={playlist.id}
-                                    name={playlist.name}
-                                    description={playlist.description}
-                                    image={playlist.image}
-                                />
-                            ))}
-                        </StyledFlexContainer>
-                    </>
-                )}
-            </StyledContainer>
-            <StyledContainer>
-                {data2 && (
-                    <>
-                        <StyledH2>Dinner</StyledH2>
-                        <StyledFlexContainer rowGap="20px" overflowX="scroll">
-                            {data2.playlists.map((playlist) => (
-                                <ResultCard
-                                    id={playlist.id}
-                                    key={playlist.id}
-                                    name={playlist.name}
-                                    description={playlist.description}
-                                    image={playlist.image}
-                                />
-                            ))}
-                        </StyledFlexContainer>
-                    </>
-                )}
-            </StyledContainer>
+            <>
+                <Onboarding />
+                <StyledContainer>
+                    {data && (
+                        <>
+                            <StyledH2>{data.message}</StyledH2>
+                            <StyledFlexContainer
+                                rowGap="20px"
+                                overflowX="scroll"
+                            >
+                                {data.playlists.map((playlist) => (
+                                    <ResultCard
+                                        id={playlist.id}
+                                        key={playlist.id}
+                                        name={playlist.name}
+                                        description={playlist.description}
+                                        image={playlist.image}
+                                    />
+                                ))}
+                            </StyledFlexContainer>
+                        </>
+                    )}
+                </StyledContainer>
+                <StyledContainer>
+                    {data2 && (
+                        <>
+                            <StyledH2>Dinner</StyledH2>
+                            <StyledFlexContainer
+                                rowGap="20px"
+                                overflowX="scroll"
+                            >
+                                {data2.playlists.map((playlist) => (
+                                    <ResultCard
+                                        id={playlist.id}
+                                        key={playlist.id}
+                                        name={playlist.name}
+                                        description={playlist.description}
+                                        image={playlist.image}
+                                    />
+                                ))}
+                            </StyledFlexContainer>
+                        </>
+                    )}
+                </StyledContainer>
+            </>
         </HomeLayout>
     );
 };
