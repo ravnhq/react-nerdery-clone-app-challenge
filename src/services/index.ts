@@ -12,8 +12,8 @@ const createInstance = (api: EApiRoutes, options = {}) => {
     const instance = axios.create({
         baseURL:
             api === EApiRoutes.MockApi
-                ? import.meta.env.VITE_MOCKED_API
-                : import.meta.env.VITE_SPOTIFY_BASE_URL,
+                ? 'https://mocked-api.onrender.com'
+                : process.env.VITE_SPOTIFY_BASE_URL,
         ...options,
     });
 
@@ -27,8 +27,8 @@ const getSpotifyToken = async () => {
         'https://accounts.spotify.com/api/token',
         {
             grant_type: 'client_credentials',
-            client_id: import.meta.env.VITE_CLIENT_ID,
-            client_secret: import.meta.env.VITE_CLIENT_SECRET,
+            client_id: process.env.VITE_CLIENT_ID,
+            client_secret: process.env.VITE_CLIENT_SECRET,
         },
         {
             headers: {

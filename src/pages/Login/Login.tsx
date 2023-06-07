@@ -8,12 +8,12 @@ import {
     Switch,
     SwitchInput,
 } from '../../components/Styles/Inputs/Toggle.styles';
-import React from 'react';
 import { StyledLink } from '../../components/Styles/Link.Styles';
 import { StyledHeader } from '../../components/Styles/Login/Header.styles';
 import { ErrorLabel } from '../../components/ErrorLabel';
 import { ErrorBanner } from '../../components/ErrorBanner';
 import { useAuthorizationContext } from '../../context/AuthorizationContext';
+import { useState } from 'react';
 
 type FormValues = {
     email: string;
@@ -39,34 +39,31 @@ const resolver: Resolver<FormValues> = async (values) => {
     };
 };
 
-const Login: React.FunctionComponent = () => {
+const Login = () => {
     const {
         register,
         handleSubmit,
         formState: { errors },
-        setValue,
-        getValues,
     } = useForm<FormValues>({
         resolver,
         defaultValues: {
             remember_me: true,
         },
     });
-    const { login, error } = useAuthorizationContext();
+    const { login, loading } = useAuthorizationContext();
+    const [error, setError] = useState<string | undefined>(undefined);
 
-    const onSubmit = async (data: FormValues) => {
+    const onSubmit = (data: FormValues) => {
         const loginData = {
             email: data.email,
             password: data.password,
         };
 
-        await login(loginData);
-    };
-
-    const manualToggle = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.code !== 'Space') return;
-
-        setValue('remember_me', !getValues('remember_me'));
+        try {
+            login(loginData);
+        } catch (err) {
+            setError('Something went wrong');
+        }
     };
 
     return (
@@ -76,7 +73,7 @@ const Login: React.FunctionComponent = () => {
             </StyledHeader>
             <StyledForm role="form" onSubmit={handleSubmit(onSubmit)}>
                 <h1>Log in to Spotify</h1>
-                {error && <ErrorBanner message={error} />}
+                {Boolean(error) && <ErrorBanner message={error} />}
                 <div>
                     <div>
                         <StyledLabel htmlFor="email">
@@ -110,14 +107,16 @@ const Login: React.FunctionComponent = () => {
                     </div>
                     <SwitchLabel htmlFor="remember_me">
                         <SwitchInput
+                            data-testid="remember-me-switch-input"
                             id="remember_me"
                             type="checkbox"
                             {...register('remember_me')}
                         />
-                        <Switch tabIndex={0} onKeyDown={manualToggle} />
+                        <Switch data-testid="remember-me-switch" tabIndex={0} />
                         <span>Remember Me</span>
                     </SwitchLabel>
                     <StyledButton type="submit">Log In</StyledButton>
+                    {loading && <p>Loading...</p>}
                     <StyledLink>
                         Don't have an account?
                         <a href="/signup">Sign up for Spotify</a>

@@ -22,7 +22,7 @@ const StyledError = styled.div`
 `;
 
 const ErrorLabel: React.FunctionComponent<Props> = ({ message }) => (
-    <StyledError>
+    <StyledError data-testid="error-message">
         <MdError />
         <p>{message}</p>
     </StyledError>

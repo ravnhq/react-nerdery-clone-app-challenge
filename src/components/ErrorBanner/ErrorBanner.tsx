@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { MdErrorOutline } from 'react-icons/md';
 
 interface Props {
-    message: string;
+    message?: string;
 }
 
 const StyledErrorBanner = styled.p`
-    background-color: ${({ theme }) => theme.colors.error};
+    background-color: red;
     padding: 20px 10px;
     display: inline-flex;
     width: 100%;
@@ -14,10 +14,12 @@ const StyledErrorBanner = styled.p`
     column-gap: 10px;
 `;
 
-const ErrorBanner: React.FunctionComponent<Props> = ({ message }) => (
-    <StyledErrorBanner data-testid="error-banner">
+const ErrorBanner: React.FunctionComponent<Props> = ({
+    message = 'Something went wrong',
+}) => (
+    <StyledErrorBanner data-label="error-message">
         <MdErrorOutline />
-        <span data-test-id="error-banner">{message}</span>
+        <span>{message}</span>
     </StyledErrorBanner>
 );
 

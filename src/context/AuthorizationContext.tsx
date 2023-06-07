@@ -6,7 +6,8 @@ import {
     useState,
 } from 'react';
 import { login as loginAPI, register } from '../services/auth.service';
-import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router';
 
 interface context {
     isAuth: boolean;
@@ -49,18 +50,20 @@ export const AuthorizationContextProvider: React.FC<PropsWithChildren> = ({
     }, []);
 
     const login = async (data: { email: string; password: string }) => {
-        await loginAPI(data)
-            .then((res) => {
+        setLoading(true);
+        try {
+            await loginAPI(data).then((res) => {
                 setUser(res.user);
                 localStorage.setItem('access_token', res.accessToken);
                 localStorage.setItem('user', JSON.stringify(res.user));
                 setIsAuth(true);
                 navigate('/');
-            })
-            .catch((err) => {
-                setError(err.response.data);
-            })
-            .finally(() => setLoading(false));
+            });
+        } catch (err) {
+            throw new Error("Couldn't login");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const logout = () => {
@@ -79,8 +82,8 @@ export const AuthorizationContextProvider: React.FC<PropsWithChildren> = ({
                 setIsAuth(true);
                 navigate('/?new');
             })
-            .catch((err) => {
-                setError(err.response.data);
+            .catch((err: AxiosError) => {
+                setError(err.message);
             })
             .finally(() => setLoading(false));
     };
