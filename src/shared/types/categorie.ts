@@ -1,9 +1,9 @@
 import { ImageSource } from './image-data';
 
-export interface Genre {
-  id: number;
+export interface Categorie {
+  id: number | string;
   href: string;
-  images: ImageSource[];
+  image: ImageSource;
   name: string;
   type: 'link';
 }

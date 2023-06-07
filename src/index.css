@@ -4,7 +4,15 @@
   --unactive: #b3b3b3;
   --soft: #a7a7a7;
   --base: white;
+  --sub: #878787;
+  --green: #1ed760;
+  --red: #d31225;
   --main-base-color: #121212;
+  --main-text-color: var(--sub);
+  --elevated-base: #242424;
+  --context-menu-bg: #282828;
   --background-noise: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
   --content-spacing: 32px;
+
+  --error: var(--red);
 }

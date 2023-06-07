@@ -1,7 +1,8 @@
 import { SectionItem } from './section-item';
 
 export interface Section {
+  id: string;
   title: string;
-  uri: string;
+  uri?: string;
   items: SectionItem[];
 }

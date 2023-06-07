@@ -6,6 +6,7 @@ import { HomeDiv, LightDiv, StyledMain } from './styles';
 
 function HomeView() {
   const { value: sections } = useAsync(getSections);
+
   return (
     <HomeDiv>
       <StyledMain>
@@ -18,7 +19,7 @@ function HomeView() {
         >
           {sections?.map(section => (
             <StyledShelf
-              key={section.uri}
+              key={section.id}
               uri={section.uri}
               title={section.title}
               shelfLink={section.uri}

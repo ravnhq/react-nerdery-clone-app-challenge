@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Sidebar } from '../sidebar/sidebar';
 import { MainView } from '../main-view/main-view';
-import { Header } from '../header';
 
 const LayoutDiv = styled.div`
   background-color: var(--background-color);
@@ -14,14 +13,12 @@ const LayoutDiv = styled.div`
   grid-template-columns: auto 1fr;
   height: 100%;
   width: 100%;
-  --sidebar-width: 232px;
 `;
 
 function DesktopLayout() {
   return (
     <LayoutDiv>
       <Sidebar />
-      <Header />
       <MainView />
     </LayoutDiv>
   );

@@ -15,20 +15,6 @@ export const ShelfSection = styled.section`
 export const ShelfTitleContainer = styled.div`
   flex-grow: 1;
   min-width: 0;
-  h2 {
-    color: var(--base);
-    font-size: 1.5rem;
-    font-weight: 700;
-    a {
-      display: inline-block;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      text-decoration: none;
-      color: inherit;
-    }
-  }
 `;
 
 export const ShelfLinkContainer = styled.div`

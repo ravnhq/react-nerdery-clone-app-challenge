@@ -6,6 +6,7 @@ import {
   SearchActiveIcon,
   SearchIcon,
 } from '../assets/icons';
+import { HOME_ROUTE, SEARCH_ROUTE } from '../shared/constants/router';
 import { NavLinkProps } from '../shared/types/nav-link';
 
 export function getLegalLinks() {
@@ -15,11 +16,11 @@ export function getLegalLinks() {
       url: '/legal',
     },
     {
-      title: 'Centro de privacidad',
+      title: 'Privacy Center',
       url: '/privacy-center',
     },
     {
-      title: 'Política de privacidad',
+      title: 'Privacy Policy',
       url: '/privacy-policy',
     },
     {
@@ -27,32 +28,33 @@ export function getLegalLinks() {
       url: '/cookies',
     },
     {
-      title: 'Información sobre anuncios',
+      title: 'About Ads',
       url: '/ad-info',
     },
   ];
 }
 
-export function getNavLinks() {
-  const links: NavLinkProps[] = [
-    {
-      icon: HomeIcon,
-      activeIcon: HomeActiveIcon,
-      name: 'Inicio',
-      to: '/',
-    },
-    {
-      icon: SearchIcon,
-      activeIcon: SearchActiveIcon,
-      to: '/search',
-      name: 'Buscar',
-    },
-    {
-      icon: CollectionIcon,
-      activeIcon: CollectionActiveIcon,
-      to: '/library',
-      name: 'Tu biblioteca',
-    },
-  ];
-  return links;
+const links: NavLinkProps[] = [
+  {
+    icon: HomeIcon,
+    activeIcon: HomeActiveIcon,
+    name: 'Home',
+    to: HOME_ROUTE,
+  },
+  {
+    icon: SearchIcon,
+    activeIcon: SearchActiveIcon,
+    to: SEARCH_ROUTE,
+    name: 'Search',
+  },
+  {
+    icon: CollectionIcon,
+    activeIcon: CollectionActiveIcon,
+    to: '/library',
+    name: 'Your library',
+  },
+];
+
+export function getNavLinks(idxs: number[] = [0, 1, 2]) {
+  return links.filter((_, idx) => idxs.includes(idx));
 }

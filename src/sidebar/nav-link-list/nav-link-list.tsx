@@ -1,21 +1,23 @@
 import { NavLink } from './nav-link';
 import { NavLinkItem, NavLinkListElement } from './styles';
-import { getNavLinks } from '../../services/static-data';
+import { NavLinkProps } from '../../shared/types/nav-link';
+export interface NavLinks {
+  navLinks: NavLinkProps[];
+}
 
-const links = getNavLinks();
-
-export const NavLinkList = () => (
-  <NavLinkListElement>
-    <NavLinkItem>
-      {links.map(link => (
-        <NavLink
-          to={link.to}
-          key={link.name}
-          icon={link.icon}
-          activeIcon={link.activeIcon}
-          name={link.name}
-        />
+export const NavLinkList = ({ navLinks }: NavLinks) => {
+  return (
+    <NavLinkListElement>
+      {navLinks.map(link => (
+        <NavLinkItem key={link.to}>
+          <NavLink
+            to={link.to}
+            icon={link.icon}
+            activeIcon={link.activeIcon}
+            name={link.name}
+          />
+        </NavLinkItem>
       ))}
-    </NavLinkItem>
-  </NavLinkListElement>
-);
+    </NavLinkListElement>
+  );
+};

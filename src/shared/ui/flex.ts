@@ -11,6 +11,7 @@ interface BoxProps {
   maxWidth?: string;
   minHeight?: string;
   maxHeight?: string;
+  borderRadius?: string;
 }
 
 export const Box = styled.div<BoxProps>`
@@ -19,6 +20,7 @@ export const Box = styled.div<BoxProps>`
   margin: ${({ margin }) => margin || '0'};
   padding: ${({ padding }) => padding || '0'};
   border: ${({ border }) => border || 'none'};
+  border-radius: ${({ borderRadius }) => borderRadius || '0px'};
   background: ${({ background }) => background || 'none'};
   min-width: ${({ minWidth }) => minWidth || 'none'};
   max-width: ${({ maxWidth }) => maxWidth || 'none'};

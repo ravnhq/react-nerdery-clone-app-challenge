@@ -1,1 +1,2 @@
-export { CollectionList } from './collection-list';
+export { UnauthCollectionList } from './unauthorized-collection-list';
+export { AuthCollectionList } from './authorized-collection-list';

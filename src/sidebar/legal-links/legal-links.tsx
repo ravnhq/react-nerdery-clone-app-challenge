@@ -7,7 +7,7 @@ export const LegalLinks: React.FC = () => (
   <LegalLinksWrapper>
     <LegalLinksList>
       {legalLinks.map(link => (
-        <LegalLink key={link.title}>
+        <LegalLink key={link.url}>
           <a href={link.url}>
             <span>{link.title}</span>
           </a>

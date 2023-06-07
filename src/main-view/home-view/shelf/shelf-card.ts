@@ -8,13 +8,14 @@ interface ShelfCardContainerProps {
 }
 export const ShelfCardsContainer = styled.div<ShelfCardContainerProps>`
   grid-column-gap: ${props => props.gridGap}px;
+  grid-row-gap: var(--row-gap, 0);
   display: grid;
   grid-template-columns: repeat(${props => props.columnCount}, minmax(0, 1fr));
   min-width: ${props => props.minContainerWidth}px;
   --column-width: ${props => props.columnWidth}px;
 
   grid-auto-flow: row;
-  grid-auto-rows: 0px;
+  grid-auto-rows: var(--auto-rows, 0px);
   grid-template-rows: 1fr;
 
   @media (min-width: 1130px) and (max-width: 1300px) {
@@ -44,6 +45,7 @@ export const ShelfCard = styled.div`
   padding: 16px;
   position: relative;
   transition: background-color 0.3s ease;
+  min-width: 180px;
   width: 100%;
 
   &:hover {
@@ -81,6 +83,8 @@ export const ShelfCard = styled.div`
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+
+      word-wrap: break-word;
 
       text-overflow: ellipsis;
     }

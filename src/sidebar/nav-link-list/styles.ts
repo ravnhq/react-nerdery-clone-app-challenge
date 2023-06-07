@@ -35,7 +35,7 @@ export const NavLinkContainer = styled(NavLink)`
   text-decoration: none;
   span {
     font-weight: 700;
-    font-size: 0.875rem;
+    font-size: var(--nav-link-size, 0.875rem);
   }
 
   .icon.active {

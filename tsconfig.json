@@ -15,7 +15,8 @@
     "jsx": "react-jsx",
 
     "types": [
-      "vite-plugin-svgr/client"
+      "vite-plugin-svgr/client",
+      "spotify-web-api-node"
     ],
 
     /* Linting */
