@@ -10,6 +10,7 @@ import { useContextMenu } from '../../hooks/useContextMenu';
 import { LibraryItem } from '../../shared/types/library-item';
 import { useModal } from '../../hooks/useModal';
 import { EditLibraryItemModal } from './modals/edit-library-item-modal';
+import { SpotifyEntityType } from '../../shared/types/spotify-entities';
 
 const OnboardingButton = styled(ThemeButton)`
   span {
@@ -24,14 +25,14 @@ const OnboardingButton = styled(ThemeButton)`
 const StyledCollectionItem = styled(AuthCollectionItem)``;
 
 export const AuthCollectionList = () => {
-  const { addOwnPlaylist, libraryItems, edit } = useLibrary();
+  const { addOwnPlaylist, favorite, libraryItems, edit } = useLibrary();
   const contextMenuRef = useRef<HTMLElement>(null);
   const { toggle: toggleEditModal, isOpen } = useModal();
 
   const { context, onContextMenu } = useContextMenu<LibraryItem>(true);
 
   return (
-    <AuthCollectionListContainer>
+    <AuthCollectionListContainer data-testid="auth-collection-list">
       <LibraryContextMenu
         menuRef={contextMenuRef}
         isToggled={context.isToggled}
@@ -49,7 +50,9 @@ export const AuthCollectionList = () => {
       />
 
       <Flex padding="0 8px 8px" width="100%">
-        {libraryItems.length === 0 ? (
+        {libraryItems.length === 0 &&
+        favorite?.entity.type === SpotifyEntityType.OWN_PLAYLIST &&
+        favorite?.entity.items.length === 0 ? (
           <Flex
             background="var(--elevated-base)"
             padding="16px 20px"
@@ -57,17 +60,26 @@ export const AuthCollectionList = () => {
             width="100%"
             borderRadius="8px"
             gap="20px"
+            direction="column"
+            align="center"
           >
-            <div>
+            <Flex direction="column" align="center">
               <div>Create your first Playlist</div>
               <span>It's easy, we'll help you</span>
               <OnboardingButton onClick={() => addOwnPlaylist()}>
                 <span>Create Playlist</span>
               </OnboardingButton>
-            </div>
+            </Flex>
           </Flex>
         ) : (
           <Flex direction="column" width="100%" gap="5px">
+            {favorite &&
+            favorite?.entity.type === SpotifyEntityType.OWN_PLAYLIST &&
+            favorite?.entity.items.length > 0 ? (
+              <>
+                <StyledCollectionItem key={favorite.id} {...favorite} />
+              </>
+            ) : null}
             {libraryItems.map(item => (
               <StyledCollectionItem
                 key={item.id}

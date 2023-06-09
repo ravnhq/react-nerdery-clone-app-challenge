@@ -15,6 +15,8 @@ import { SEARCH_ROUTE } from '../shared/constants/router';
 import { useAuth } from '../hooks/useAuth';
 import { ThemeButton } from '../shared/ui/button';
 
+import history from 'history/browser';
+
 const isInSearchView = (pathname: string) =>
   matchPath(`${SEARCH_ROUTE}/*`, pathname);
 
@@ -25,17 +27,17 @@ export const Header = () => {
   const { auth, isLogged, logout } = useAuth();
 
   return (
-    <HeaderWrapper>
+    <HeaderWrapper data-testid="header-element">
       <StyledHeader>
         <Flex direction="row" gap="8px">
           <HistoryButtonContainer
-            onClick={() => navigate(-1)}
+            onClick={() => history.back()}
             disabled={window.history.length === 1}
           >
             <LeftArrowIcon />
           </HistoryButtonContainer>
           <HistoryButtonContainer
-            onClick={() => navigate(1)}
+            onClick={() => history.forward()}
             disabled={window.history.length === window.history.state.index + 1}
           >
             <RightArrowIcon />

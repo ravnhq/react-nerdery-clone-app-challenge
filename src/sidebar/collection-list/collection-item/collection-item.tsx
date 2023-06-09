@@ -4,6 +4,7 @@ import { LibraryItem } from '../../../shared/types/library-item';
 import { ownPlaylistImg } from '../../../assets/images';
 import { getFirstImageOrDefault } from '../../../services/data-mappers/utils';
 import { SpotifyEntityType } from '../../../shared/types/spotify-entities';
+import { useNavigate } from 'react-router-dom';
 
 const CollectionItemContainer = styled.div`
   display: flex;
@@ -49,21 +50,20 @@ export const AuthCollectionItem = ({
   entity,
   onContextMenu,
 }: AuthCollectionItemProps) => {
-  // console.log(entity);
+  const imageURL =
+    entity.type === SpotifyEntityType.OWN_PLAYLIST
+      ? entity.image ?? ownPlaylistImg
+      : getFirstImageOrDefault(entity.images).url;
+
+  const navigate = useNavigate();
 
   return (
-    <CollectionItemContainer onContextMenu={onContextMenu}>
+    <CollectionItemContainer
+      onContextMenu={onContextMenu}
+      onClick={() => navigate(`/entity/${entity.type}/${entity.id}`)}
+    >
       <PlaylistIcon size={48} borderRadius={4}>
-        <img
-          width="100%"
-          height="100%"
-          src={
-            entity.type === SpotifyEntityType.OWN_PLAYLIST
-              ? ownPlaylistImg
-              : getFirstImageOrDefault(entity.images).url
-          }
-          alt=""
-        />
+        <img width="100%" height="100%" src={imageURL} alt="" />
       </PlaylistIcon>
       <CollectionItemDetails>
         <p>{entity.name}</p>

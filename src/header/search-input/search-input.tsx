@@ -2,14 +2,15 @@ import styled from 'styled-components';
 import { SearchIcon } from '../../assets/icons';
 import { Flex } from '../../shared/ui/flex';
 import { RefObject, useEffect, useRef, useState } from 'react';
-import { matchPath, useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
-import {
-  SEARCH_RESULT_ROUTE,
-  SEARCH_ROUTE,
-} from '../../shared/constants/router';
-import { debounce } from 'lodash';
+import { SEARCH_ROUTE } from '../../shared/constants/router';
 import { InputChangeEvent } from '../../shared/types/input-change-event';
+import { useParams } from 'react-router-dom';
+
+// For vitest to work, we need to import lodash like this:
+import lodash from 'lodash';
+const { debounce } = lodash;
 
 const SearchContainer = styled.div`
   flex: 0 1 364px;
@@ -43,10 +44,10 @@ export function SearchInput() {
 
   const inputRef = useRef() as RefObject<HTMLInputElement>;
 
-  const { pathname } = useLocation();
-  const initialMatch = matchPath(`${SEARCH_RESULT_ROUTE}/*`, pathname);
-  const [searched, setSearched] = useState(initialMatch?.params.text || '');
-  const extraParam = handleExtraParam(initialMatch?.params['*']);
+  const { text: textParam, filter } = useParams();
+
+  const [searched, setSearched] = useState(textParam || '');
+  const extraParam = handleExtraParam(filter);
 
   const textHandler = (e: InputChangeEvent) => {
     const text = e.target.value;
@@ -56,14 +57,13 @@ export function SearchInput() {
   const debouncedHandler = debounce(textHandler, HANDLER_MS_WAIT);
 
   useEffect(() => {
-    const match = matchPath(`${SEARCH_RESULT_ROUTE}/*`, pathname);
-    if (match?.params.text) {
+    if (textParam) {
       if (inputRef && inputRef.current) {
-        inputRef.current.value = decodeURIComponent(match.params.text);
+        inputRef.current.value = decodeURIComponent(textParam);
       }
-      setSearched(match.params.text);
+      setSearched(textParam);
     }
-  }, [pathname]);
+  }, [textParam]);
 
   useEffect(() => {
     const redirectString = `${SEARCH_ROUTE}/${encodeURIComponent(
@@ -71,7 +71,7 @@ export function SearchInput() {
     )}${extraParam}`;
 
     navigate(redirectString, {
-      replace: true,
+      replace: false,
     });
   }, [searched, navigate, extraParam]);
 
@@ -82,9 +82,10 @@ export function SearchInput() {
       }}
       align="center"
     >
-      <SearchContainer>
+      <SearchContainer data-testid="text-input-container">
         <form role="search">
           <TextField
+            data-testid="text-input"
             ref={inputRef}
             maxLength={800}
             autoCorrect="off"

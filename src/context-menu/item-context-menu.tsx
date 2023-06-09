@@ -13,8 +13,21 @@ export const ItemContextMenu = ({
   menuRef,
   targetedItem,
 }: Omit<ContextMenuProps<AllSpotifyObjects>, 'buttons'>) => {
-  const { add, ownPlaylists, addToPlaylist } = useLibrary();
+  const {
+    add,
+    favorite,
+    ownPlaylists,
+    addToPlaylist,
+    addToFavorites,
+    removeFromFavorites,
+  } = useLibrary();
 
+  let itemInFavorites = false;
+  if (favorite?.entity.type === SpotifyEntityType.OWN_PLAYLIST) {
+    itemInFavorites = !!favorite?.entity.items.find(
+      item => item.id === targetedItem?.id,
+    );
+  }
   return (
     <StyledMenu
       left={positionX}
@@ -27,20 +40,33 @@ export const ItemContextMenu = ({
         <>
           {targetedItem.type === SpotifyEntityType.TRACK ? (
             <>
-              <button onClick={() => addToPlaylist(targetedItem, 'favorites')}>
-                Add to liked songs
-              </button>
-              <span> Add to playlist:</span>
-              <ButtonContainer>
-                {ownPlaylists.map((item, idx) => (
-                  <button
-                    onClick={() => addToPlaylist(targetedItem, item.id)}
-                    key={idx}
-                  >
-                    Add to {item.entity.name}
-                  </button>
-                ))}
-              </ButtonContainer>
+              {itemInFavorites ? (
+                <button onClick={() => removeFromFavorites(targetedItem)}>
+                  {' '}
+                  Remove from liked songs{' '}
+                </button>
+              ) : (
+                <button onClick={() => addToFavorites(targetedItem)}>
+                  Add to liked songs
+                </button>
+              )}
+              {ownPlaylists.length > 0 ? (
+                <>
+                  <span> Add to playlist:</span>
+                  <ButtonContainer>
+                    {ownPlaylists.map((item, idx) => (
+                      <button
+                        onClick={() => addToPlaylist(targetedItem, item.id)}
+                        key={idx}
+                      >
+                        Add to {item.entity.name}
+                      </button>
+                    ))}
+                  </ButtonContainer>
+                </>
+              ) : (
+                <p>Create a new playlist to add a song there </p>
+              )}
             </>
           ) : (
             <button onClick={() => add(targetedItem)}> Add to library</button>

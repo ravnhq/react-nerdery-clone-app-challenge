@@ -10,7 +10,7 @@ import { Flex } from '../shared/ui/flex';
 import { useLibrary } from '../hooks/useLibrary';
 
 const UnauthenticatedSidebar = ({ navLinks }: NavLinks) => (
-  <SidebarDiv>
+  <SidebarDiv data-testid="sidebar-element">
     <SidebarNav>
       <LogoDiv>
         <SpotifyLogo />
@@ -74,7 +74,7 @@ const AuthenticatedSidebar = ({ navLinks }: NavLinks) => {
   const { addOwnPlaylist } = useLibrary();
 
   return (
-    <AuthSidebarDiv>
+    <AuthSidebarDiv data-test-id="sidebar-element">
       <SidebarNav>
         <NavlinkBox>
           <NavLinkList navLinks={navLinks} />

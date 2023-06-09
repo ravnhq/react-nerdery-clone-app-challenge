@@ -1,14 +1,11 @@
-import { Route, Routes } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import { HomeView } from './home-view';
-import { SearchCategorieView } from './search-categorie-view/search-view';
 import { Header } from '../header';
-import { SEARCH_ROUTE } from '../shared/constants/router';
-import { SearchResultsView } from './search-categorie-view/search-results-view';
-import { SearchResultsFilter } from './search-categorie-view/search-results-filter';
+
 import { useEntityContextMenu } from '../hooks/useContextMenu';
 import { useRef } from 'react';
 import { ItemContextMenu } from '../context-menu/item-context-menu';
+import { useAuth } from '../hooks/useAuth';
 
 const MainDiv = styled.div`
   grid-area: main-view;
@@ -25,38 +22,23 @@ function MainView() {
 
   const contextMenuRef = useRef<HTMLElement>(null);
 
+  const { isLogged } = useAuth();
+
   return (
     <>
       <Header />
-      <MainDiv>
+      <MainDiv data-testid="mainview-element">
         <div className="header-spacer" />
-        <ItemContextMenu
-          menuRef={contextMenuRef}
-          isToggled={context.isToggled}
-          positionX={context.x}
-          positionY={context.y}
-          targetedItem={context.extraData}
-        />
-        <Routes>
-          <Route index element={<HomeView />} />
-          <Route path={SEARCH_ROUTE} element={<SearchCategorieView />} />
-          <Route
-            path={`${SEARCH_ROUTE}/:text`}
-            element={<SearchResultsView />}
+        {isLogged ? (
+          <ItemContextMenu
+            menuRef={contextMenuRef}
+            isToggled={context.isToggled}
+            positionX={context.x}
+            positionY={context.y}
+            targetedItem={context.extraData}
           />
-          <Route
-            path={`${SEARCH_ROUTE}/:text/:filter`}
-            element={<SearchResultsFilter />}
-          />
-          <Route
-            path="*"
-            element={
-              <div>
-                <h1>Route Not Found</h1>
-              </div>
-            }
-          />
-        </Routes>
+        ) : null}
+        <Outlet />
       </MainDiv>
     </>
   );

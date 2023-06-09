@@ -27,6 +27,12 @@ export const StyledMenu = styled.menu<{
     font-size: 0.815rem;
     font-weight: 600;
   }
+  p {
+    color: var(--sub);
+    padding: 8px 8px;
+    font-size: 0.715rem;
+    font-weight: 400;
+  }
   button {
     width: 100%;
     background-color: transparent;

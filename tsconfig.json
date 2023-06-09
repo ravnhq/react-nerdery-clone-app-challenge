@@ -16,7 +16,8 @@
 
     "types": [
       "vite-plugin-svgr/client",
-      "spotify-web-api-node"
+      "spotify-web-api-node",
+      "vitest/globals"
     ],
 
     /* Linting */

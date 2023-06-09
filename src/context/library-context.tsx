@@ -23,9 +23,5 @@ export const LibraryContext = createContext<LibraryValueDispatch>(
 export const LibraryProvider = (props: PropsWithChildren) => {
   const [library, setLibrary] = useState<Library>([]);
 
-  const addToLibrary = (item: LibraryItem) => {
-    setLibrary([...library, item]);
-  };
-
   return <LibraryContext.Provider {...props} value={[library, setLibrary]} />;
 };

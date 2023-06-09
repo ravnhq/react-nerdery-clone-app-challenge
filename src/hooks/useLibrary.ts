@@ -9,6 +9,7 @@ import {
   getLibraryItems,
   removeFromLibrary,
   addTrackToPlaylist,
+  removeTrackFromPlaylist,
 } from '../services/http-spotify-api';
 import { useAuth } from './useAuth';
 import { AllColectableSpotifyObjects } from '../shared/types/spotify-objects';
@@ -18,11 +19,17 @@ import { SpotifyEntityType } from '../shared/types/spotify-entities';
 export const useLibrary = () => {
   const [library, setLibrary] = useContext(LibraryContext);
   const { auth } = useAuth();
-  if (!auth) throw Error('Must be inside an AuthProvider');
+
+  if (!auth) throw Error('useLibrary hook must be inside an AuthProvider');
 
   const ownPlaylists = library.filter(
-    item => item.entity.type === SpotifyEntityType.OWN_PLAYLIST,
+    item =>
+      item.entity.type === SpotifyEntityType.OWN_PLAYLIST &&
+      item.entity.id !== 'favorites',
   );
+
+  const libraryItems = library.filter(item => item.entity.id !== 'favorites');
+  const favorite = library.find(item => item.entity.id === 'favorites');
 
   useEffect(() => {
     getLibraryItems(auth.user.id)
@@ -31,7 +38,6 @@ export const useLibrary = () => {
       })
       .catch(error => {
         console.log(error);
-
         alert('There was an error while fetching the items into library');
       });
   }, [auth.user.id, setLibrary]);
@@ -51,12 +57,41 @@ export const useLibrary = () => {
       });
   };
 
+  const addToPlaylistPromise = (
+    track: SpotifyApi.TrackObjectSimplified,
+    libraryItemId: LibraryItemId,
+  ) =>
+    addTrackToPlaylist(track, libraryItemId).then(data =>
+      setLibrary(
+        library.map(item => {
+          if (item.id === data.id) {
+            return data;
+          }
+          return item;
+        }),
+      ),
+    );
+
   const addToPlaylist = (
     track: SpotifyApi.TrackObjectSimplified,
     libraryItemId: LibraryItemId,
   ) => {
-    addTrackToPlaylist(track, libraryItemId)
-      .then(data =>
+    addToPlaylistPromise(track, libraryItemId).catch(error => {
+      console.log(error);
+      alert('There was an error while adding the item into library');
+    });
+  };
+
+  const addToFavorites = (track: SpotifyApi.TrackObjectSimplified) => {
+    addToPlaylistPromise(track, `favorites-${auth.user.id}`).catch(error => {
+      console.log(error);
+      alert('There was an error while adding the item into your favorites');
+    });
+  };
+
+  const removeFromFavorites = (track: SpotifyApi.TrackObjectSimplified) => {
+    removeTrackFromPlaylist(`favorites-${auth.user.id}`, track.id).then(
+      data => {
         setLibrary(
           library.map(item => {
             if (item.id === data.id) {
@@ -64,12 +99,9 @@ export const useLibrary = () => {
             }
             return item;
           }),
-        ),
-      )
-      .catch(error => {
-        console.log(error);
-        alert('There was an error while adding the item into library');
-      });
+        );
+      },
+    );
   };
 
   const addOwnPlaylist = () => {
@@ -115,10 +147,13 @@ export const useLibrary = () => {
     add,
     get,
     remove,
-    libraryItems: library,
+    favorite,
+    libraryItems,
     ownPlaylists,
-    addOwnPlaylist,
-    edit,
     addToPlaylist,
+    addOwnPlaylist,
+    addToFavorites,
+    removeFromFavorites,
+    edit,
   };
 };

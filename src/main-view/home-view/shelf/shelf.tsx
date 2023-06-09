@@ -6,10 +6,8 @@ import {
   ShelfTitleContainer,
   ShelfLinkContainer,
 } from './styles';
-import { ShelfCard, ShelfCardsContainer } from './shelf-card';
 import { Heading2 } from '../../../shared/ui/heading2';
-import { SPOTIFY_APP_URL } from '../../../shared/constants/app';
-import { useEntityContextMenu } from '../../../hooks/useContextMenu';
+import { ShelfCardList } from './shelf-card-list';
 
 interface ShelfProps {
   title: string;
@@ -20,8 +18,6 @@ interface ShelfProps {
 }
 
 const Shelf = ({ title, shelfLink, items, className }: ShelfProps) => {
-  const { onContextMenu } = useEntityContextMenu(true);
-
   return (
     <ShelfSection className={className}>
       <Flex margin="0 0 16px">
@@ -36,29 +32,7 @@ const Shelf = ({ title, shelfLink, items, className }: ShelfProps) => {
           </ShelfLinkContainer>
         )}
       </Flex>
-      <ShelfCardsContainer
-        gridGap={24}
-        columnCount={6}
-        minContainerWidth={372}
-        columnWidth={174}
-      >
-        {items.map(item => (
-          <ShelfCard
-            key={item.id}
-            onContextMenu={e => onContextMenu(e, item.entity)}
-          >
-            <div className="portrait">
-              <img src={item.image.url} alt={item.name} />
-            </div>
-            <div className="card-text">
-              <a href={`${SPOTIFY_APP_URL}/${item.type}/${item.id}`}>
-                <div>{item.name}</div>
-              </a>
-              <div>{item.description}</div>
-            </div>
-          </ShelfCard>
-        ))}
-      </ShelfCardsContainer>
+      <ShelfCardList items={items} />
     </ShelfSection>
   );
 };

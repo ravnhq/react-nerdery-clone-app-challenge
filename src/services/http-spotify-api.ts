@@ -10,6 +10,8 @@ import {
 import { LoginInputs } from '../shared/types/auth-inputs';
 import { UserWithToken } from '../shared/types/user';
 import { SignupInputs } from '../shared/types/signup-inputs';
+import { AllSpotifyObjectsFull } from '../shared/types/spotify-objects';
+import { entityMapper } from './data-mappers/entity-mapper';
 
 export const API_BASE_URL = import.meta.env.VITE_APIBASE_URL;
 
@@ -84,6 +86,16 @@ export async function addTrackToPlaylist(
   return data;
 }
 
+export async function removeTrackFromPlaylist(
+  playlistId: LibraryItemId,
+  trackId: string,
+) {
+  const { data } = await axios.delete<LibraryItem>(
+    `${API_BASE_URL}/remove-from-playlist/${playlistId}/${trackId}`,
+  );
+  return data;
+}
+
 export async function login(payload: LoginInputs) {
   const { data } = await axios.post<UserWithToken>(`${API_LOGIN_URL}`, payload);
   return data;
@@ -95,4 +107,11 @@ export async function register(payload: SignupInputs) {
     payload,
   );
   return data;
+}
+
+export async function getEntity(type?: string, id?: string) {
+  const { data } = await axios.get<AllSpotifyObjectsFull>(
+    `${API_BASE_URL}/entity/${type}/${id}`,
+  );
+  return entityMapper(data);
 }

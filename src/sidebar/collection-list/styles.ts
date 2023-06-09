@@ -60,6 +60,7 @@ export const PlaylistIcon = styled.div<{
   justify-content: center;
   width: ${props => props.size ?? 24}px;
   height: ${props => props.size ?? 24}px;
+  overflow: hidden;
   background-color: white;
   border-radius: ${props => props.borderRadius ?? 2}px;
 `;
