@@ -5,7 +5,7 @@ interface params<T> {
     delay?: number;
 }
 
-function useDebounceValue<T>(value: T, delay = 1500) {
+export function useDebounceValue<T>(value: T, delay = 1500) {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
     useEffect(() => {
@@ -18,5 +18,3 @@ function useDebounceValue<T>(value: T, delay = 1500) {
 
     return debouncedValue;
 }
-
-export default useDebounceValue;

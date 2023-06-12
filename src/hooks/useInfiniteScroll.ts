@@ -22,6 +22,24 @@ export function useInfiniteScroll<T>({
     const [hasMore, setHasMore] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 
+    useEffect(() => {
+        if (resetCondition) {
+            return;
+        }
+
+        setLoading(true);
+        fn()
+            .then((res) => {
+                setData((prev) => {
+                    if (!prev) return res;
+                    return [...new Set([...prev, ...res])];
+                });
+                setHasMore(res.length > 0);
+            })
+            .catch(setError)
+            .finally(() => setLoading(false));
+    }, dependencies);
+
     const observer = useRef<IntersectionObserver>();
 
     const lastElementRef = useCallback(
@@ -50,21 +68,6 @@ export function useInfiniteScroll<T>({
         setData(undefined);
         setNext(0);
     }, resetDeps);
-
-    useEffect(() => {
-        if (resetCondition) {
-            return;
-        }
-
-        setLoading(true);
-        fn()
-            .then((res) => {
-                setData((prev) => [...new Set([...(prev || []), ...res])]);
-                setHasMore(res.length > 0);
-            })
-            .catch(setError)
-            .finally(() => setLoading(false));
-    }, dependencies);
 
     return { loading, data, lastElementRef, error };
 }
