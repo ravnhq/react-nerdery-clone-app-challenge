@@ -4,8 +4,7 @@ import ArtistsSearch from '../../components/SearchResults/Artists';
 import AlbumsSearch from '../../components/SearchResults/Albums';
 import PlaylistsSearch from '../../components/SearchResults/Playlists';
 import { useSearchParams } from 'react-router-dom';
-// TODO: Make playlist private
-import useDebounceValue from '../../hooks/useDebounceValue';
+import { useDebounceValue } from '../../hooks/useDebounceValue';
 import { SearchLayout } from '../../Layout/SearchLayout';
 import { SearchType } from '../../components/SearchBar/SearchBar';
 
