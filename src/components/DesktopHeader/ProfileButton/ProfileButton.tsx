@@ -54,7 +54,7 @@ const StyledProfileMenuButton = styled.button`
 const ProfileButton = () => {
     const { user, logout } = useAuthorizationContext();
     const [isOpen, setIsOpen] = useState(false);
-    const [menuRef] = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
+    const menuRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
 
     return (
         <StyledProfileContainer>
