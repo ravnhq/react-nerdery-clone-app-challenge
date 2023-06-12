@@ -1,12 +1,11 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { LibraryContext } from '../context/library-context';
 import {
   addToLibrary,
   createPlaylist,
   editLibraryItem,
-  getLibraryItems,
   removeFromLibrary,
   addTrackToPlaylist,
   removeTrackFromPlaylist,
@@ -30,17 +29,6 @@ export const useLibrary = () => {
 
   const libraryItems = library.filter(item => item.entity.id !== 'favorites');
   const favorite = library.find(item => item.entity.id === 'favorites');
-
-  useEffect(() => {
-    getLibraryItems(auth.user.id)
-      .then(data => {
-        setLibrary(data);
-      })
-      .catch(error => {
-        console.log(error);
-        alert('There was an error while fetching the items into library');
-      });
-  }, [auth.user.id, setLibrary]);
 
   const add = (entity: AllColectableSpotifyObjects) => {
     addToLibrary({

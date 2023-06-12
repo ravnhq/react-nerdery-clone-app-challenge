@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from '../context/auth-context';
 import { SignupInputs } from '../shared/types/signup-inputs';
 import { LoginInputs } from '../shared/types/auth-inputs';
@@ -11,7 +11,7 @@ export const useAuth = () => {
   const authConsumer = useContext(AuthContext);
   if (!authConsumer) throw Error('useAuth must be inside AuthProvider');
   const [auth, setAuth] = authConsumer;
-  const isLogged = useMemo(() => !!auth, [auth]);
+  const isLogged = !!auth;
 
   const login = (payload: LoginInputs) => {
     return loginRequest(payload).then(authResponse => {

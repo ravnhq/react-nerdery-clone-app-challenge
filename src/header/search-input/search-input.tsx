@@ -1,16 +1,14 @@
 import styled from 'styled-components';
 import { SearchIcon } from '../../assets/icons';
 import { Flex } from '../../shared/ui/flex';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { SEARCH_ROUTE } from '../../shared/constants/router';
 import { InputChangeEvent } from '../../shared/types/input-change-event';
 import { useParams } from 'react-router-dom';
 
-// For vitest to work, we need to import lodash like this:
-import lodash from 'lodash';
-const { debounce } = lodash;
+import { useDebouncedCallback } from 'use-debounce';
 
 const SearchContainer = styled.div`
   flex: 0 1 364px;
@@ -42,38 +40,33 @@ const handleExtraParam = (extraParam: string | undefined) => {
 export function SearchInput() {
   const navigate = useNavigate();
 
-  const inputRef = useRef() as RefObject<HTMLInputElement>;
-
   const { text: textParam, filter } = useParams();
-
-  const [searched, setSearched] = useState(textParam || '');
   const extraParam = handleExtraParam(filter);
 
-  const textHandler = (e: InputChangeEvent) => {
-    const text = e.target.value;
-    setSearched(encodeURIComponent(text));
-  };
+  const inputRef = useRef() as RefObject<HTMLInputElement>;
 
-  const debouncedHandler = debounce(textHandler, HANDLER_MS_WAIT);
+  const [searched, setSearched] = useState(textParam || '');
 
-  useEffect(() => {
-    if (textParam) {
-      if (inputRef && inputRef.current) {
-        inputRef.current.value = decodeURIComponent(textParam);
-      }
-      setSearched(textParam);
-    }
-  }, [textParam]);
+  if (inputRef && inputRef.current) {
+    inputRef.current.focus();
+  }
 
-  useEffect(() => {
-    const redirectString = `${SEARCH_ROUTE}/${encodeURIComponent(
-      searched,
-    )}${extraParam}`;
-
-    navigate(redirectString, {
+  const debouncedNavigate = useDebouncedCallback((text: string) => {
+    navigate(text, {
       replace: false,
     });
-  }, [searched, navigate, extraParam]);
+  }, HANDLER_MS_WAIT);
+
+  const textHandler = (e: InputChangeEvent) => {
+    const text = e.currentTarget.value;
+    setSearched(encodeURIComponent(text));
+
+    const redirectString = `${SEARCH_ROUTE}/${encodeURIComponent(
+      text,
+    )}${extraParam}`;
+
+    debouncedNavigate(redirectString);
+  };
 
   return (
     <Flex
@@ -87,12 +80,13 @@ export function SearchInput() {
           <TextField
             data-testid="text-input"
             ref={inputRef}
+            value={decodeURIComponent(searched)}
             maxLength={800}
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck="false"
             placeholder="What do you listen to?"
-            onChange={debouncedHandler}
+            onChange={textHandler}
             style={{ color: 'rgb(0, 0, 0)' }}
           />
         </form>
