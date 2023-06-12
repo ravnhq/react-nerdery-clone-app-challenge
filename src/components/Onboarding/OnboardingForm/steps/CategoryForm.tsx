@@ -55,7 +55,10 @@ const CategoryForm: React.FC<Props> = ({ categories, updateField }) => {
             <StepTitle>What type of music do you like?</StepTitle>
             <Grid>
                 {categoryData.map((category) => (
-                    <StyledCategoryLabel key={category.id}>
+                    <StyledCategoryLabel
+                        key={category.id}
+                        data-testid="category-card"
+                    >
                         <input
                             type="checkbox"
                             value={category.id}

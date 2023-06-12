@@ -31,7 +31,7 @@ const Onboarding = () => {
     const [showOnboarding, setShowOnboarding] = useState(
         searchParams.has('new'),
     );
-    const [dialogRef] = useClickOutside<HTMLDivElement>(() => handleClose());
+    const dialogRef = useClickOutside<HTMLDivElement>(() => handleClose());
 
     const handleClose = () => {
         setShowOnboarding(false);

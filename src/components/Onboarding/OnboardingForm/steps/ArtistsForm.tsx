@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchArtists } from '../../../../services/spotify.service';
 import { useInfiniteScroll } from '../../../../hooks/useInfiniteScroll';
-import useDebounceValue from '../../../../hooks/useDebounceValue';
+import {useDebounceValue} from '../../../../hooks/useDebounceValue';
 import { OnBoardingFormData } from '../OnboardingForm';
 import { Grid, StepTitle } from './Steps.styles';
 import styled from 'styled-components';
@@ -103,7 +103,7 @@ const ArtistsForm: React.FC<Props> = ({ artists, updateField }) => {
                                     })
                                 }
                             />
-                            <ArtistImage src={artist.image} />
+                            <ArtistImage src={artist.image} alt="" />
                             <ArtistName>{artist.name}</ArtistName>
                         </StyledArtistLabel>
                     </div>
