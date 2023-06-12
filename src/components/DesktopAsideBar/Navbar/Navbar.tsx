@@ -14,7 +14,7 @@ const StyledLink = styled(Link)<Props>`
     column-gap: 12px;
     font-weight: 400;
     font-size: 1.2rem;
-    color: ${({ active }) => (!active ? 'lightgray' : 'white')};
+    color: ${({ active }) => (active === 'true' ? 'white' : 'gray')};
     padding: 10px 12px;
 
     &:hover {
