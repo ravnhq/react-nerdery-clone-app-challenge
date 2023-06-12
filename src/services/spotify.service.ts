@@ -142,7 +142,7 @@ export const removeTrackFromPlaylist = async (id: string) => {
 };
 
 export const deletePlaylistById = async (id: number) => {
-    return mockedApiInstance.delete(`/playlists/${id}`);
+    mockedApiInstance.delete(`/playlists/${id}`);
 };
 
 export const editPlaylistInfo = async (form: PlaylistInfo) => {

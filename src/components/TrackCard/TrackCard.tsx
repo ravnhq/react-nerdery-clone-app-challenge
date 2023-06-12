@@ -85,7 +85,7 @@ const TrackCard = forwardRef<HTMLDivElement, Props>(
         };
 
         return (
-            <StyledTrackCard ref={ref}>
+            <StyledTrackCard ref={ref} data-testid="track-card">
                 <StyledFlexContainer alignItems="center">
                     <StyledImage
                         src={track.album.image}

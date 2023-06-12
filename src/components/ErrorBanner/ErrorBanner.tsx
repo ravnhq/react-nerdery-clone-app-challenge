@@ -17,7 +17,7 @@ const StyledErrorBanner = styled.p`
 const ErrorBanner: React.FunctionComponent<Props> = ({
     message = 'Something went wrong',
 }) => (
-    <StyledErrorBanner data-label="error-message">
+    <StyledErrorBanner data-testid="error-banner">
         <MdErrorOutline />
         <span>{message}</span>
     </StyledErrorBanner>
