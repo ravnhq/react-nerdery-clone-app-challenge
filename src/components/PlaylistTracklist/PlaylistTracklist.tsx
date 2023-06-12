@@ -20,14 +20,13 @@ const StyledPlaylistTrack = styled.div`
 `;
 
 const PlaylistTracklist: React.FC<Props> = ({ playlistId }) => {
-    const {
-        data: playlistsSongs,
-        loading,
-        callback: fetchSongs,
-    } = useAsync(() => getPlaylistTracks(playlistId), {
-        dependencies: [playlistId],
-        runOnMount: true,
-    });
+    const { data: playlistsSongs, callback: fetchSongs } = useAsync(
+        () => getPlaylistTracks(playlistId),
+        {
+            dependencies: [playlistId],
+            runOnMount: true,
+        },
+    );
 
     const addTrack = (track: Track) => {
         addTrackToPlaylist(playlistId, track).then(fetchSongs);

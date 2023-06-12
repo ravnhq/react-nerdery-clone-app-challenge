@@ -4,7 +4,7 @@ import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { TrackCard } from '../../components/TrackCard';
 import styled from 'styled-components';
 import { Track } from '../../shared/types/spotify';
-import useDebounceValue from '../../hooks/useDebounceValue';
+import { useDebounceValue } from '../../hooks/useDebounceValue';
 import { fetchTracks } from '../../services/spotify.service';
 
 interface Props {

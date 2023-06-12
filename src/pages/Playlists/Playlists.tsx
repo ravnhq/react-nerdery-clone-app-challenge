@@ -8,7 +8,7 @@ const Playlist = () => {
     const id = parseInt(playlistId || '');
 
     return (
-        <HomeLayout loading={!playlistId}>
+        <HomeLayout>
             <PlaylistInformation playlistId={id} />
             <PlaylistTracklist playlistId={id} />
         </HomeLayout>
