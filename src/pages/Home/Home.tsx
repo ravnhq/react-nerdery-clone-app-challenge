@@ -25,7 +25,7 @@ const Home = () => {
     );
 
     return (
-        <HomeLayout loading={loading && loading2}>
+        <HomeLayout>
             <>
                 <Onboarding />
                 <StyledContainer>
