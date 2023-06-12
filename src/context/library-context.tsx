@@ -29,9 +29,8 @@ export const LibraryProvider = (props: PropsWithChildren) => {
   const [library, setLibrary] = useState<Library>([]);
   const { auth } = useAuth();
 
-  if (!auth) throw Error('useLibrary hook must be inside an AuthProvider');
-
   useEffect(() => {
+    if (!auth) return;
     getLibraryItems(auth.user.id)
       .then(data => {
         setLibrary(data);
@@ -40,7 +39,7 @@ export const LibraryProvider = (props: PropsWithChildren) => {
         console.log(error);
         alert('There was an error while fetching the items into library');
       });
-  }, [auth.user.id, setLibrary]);
+  }, [auth, auth?.user.id, setLibrary]);
 
   return <LibraryContext.Provider {...props} value={[library, setLibrary]} />;
 };

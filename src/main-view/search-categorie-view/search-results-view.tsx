@@ -27,7 +27,7 @@ export const SearchResultsView = () => {
         selected=""
       />
       {pending ? (
-        <div>Cargando...</div>
+        <div>Loading...</div>
       ) : (
         searchSections &&
         searchSections.map(section =>
