@@ -29,7 +29,7 @@ const authContextDefaults: context = {
     loading: false,
 };
 
-const AuthorizationContext = createContext<context>(authContextDefaults);
+export const AuthorizationContext = createContext<context>(authContextDefaults);
 
 export const AuthorizationContextProvider: React.FC<PropsWithChildren> = ({
     children,
@@ -51,19 +51,18 @@ export const AuthorizationContextProvider: React.FC<PropsWithChildren> = ({
 
     const login = async (data: { email: string; password: string }) => {
         setLoading(true);
-        try {
-            await loginAPI(data).then((res) => {
+        loginAPI(data)
+            .then((res) => {
                 setUser(res.user);
                 localStorage.setItem('access_token', res.accessToken);
                 localStorage.setItem('user', JSON.stringify(res.user));
                 setIsAuth(true);
                 navigate('/');
-            });
-        } catch (err) {
-            throw new Error("Couldn't login");
-        } finally {
-            setLoading(false);
-        }
+            })
+            .catch((err: AxiosError) => {
+                setError(err.message);
+            })
+            .finally(() => setLoading(false));
     };
 
     const logout = () => {
@@ -75,7 +74,7 @@ export const AuthorizationContextProvider: React.FC<PropsWithChildren> = ({
     };
 
     const signup = async (data: UserCreate) => {
-        await register(data)
+        register(data)
             .then((res) => {
                 setUser(res.user);
                 localStorage.setItem('access_token', res.accessToken);
