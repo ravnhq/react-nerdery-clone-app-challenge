@@ -6,9 +6,10 @@ import { ShelfCard, ShelfCardsContainer } from './shelf-card';
 
 interface ShelfCardListProps {
   items: SectionItem[];
+  expanded?: boolean;
 }
 
-export const ShelfCardList = ({ items }: ShelfCardListProps) => {
+export const ShelfCardList = ({ items, expanded }: ShelfCardListProps) => {
   const { onContextMenu } = useEntityContextMenu(true);
   const navigate = useNavigate();
 
@@ -18,6 +19,7 @@ export const ShelfCardList = ({ items }: ShelfCardListProps) => {
       columnCount={6}
       minContainerWidth={372}
       columnWidth={174}
+      expanded={expanded}
     >
       {items.map(item => (
         <ShelfCard

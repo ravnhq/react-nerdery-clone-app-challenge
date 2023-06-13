@@ -25,6 +25,7 @@ export const searchMapper = (searchSections: SpotifyApi.SearchResponse) => {
       title: sectionsDisplayNames[typedSearchKey],
       uri: searchKey,
       id: searchKey.slice(0, -1),
+      totalItems: searchSection?.total,
     } as Section;
   });
 };

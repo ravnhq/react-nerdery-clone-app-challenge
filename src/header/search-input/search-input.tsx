@@ -54,6 +54,7 @@ export function SearchInput() {
   const debouncedNavigate = useDebouncedCallback((text: string) => {
     navigate(text, {
       replace: false,
+      state: text,
     });
   }, HANDLER_MS_WAIT);
 
@@ -65,7 +66,8 @@ export function SearchInput() {
       text,
     )}${extraParam}`;
 
-    debouncedNavigate(redirectString);
+    if (text === '') debouncedNavigate(`${SEARCH_ROUTE}`);
+    else debouncedNavigate(redirectString);
   };
 
   return (

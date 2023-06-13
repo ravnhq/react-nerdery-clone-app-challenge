@@ -37,6 +37,17 @@ export async function searchAll(searchText: string) {
   return searchMapper(data);
 }
 
+export async function searchWithFilter(
+  searchText: string,
+  filter: string,
+  offset: number,
+) {
+  const { data } = await axios.get<SpotifyApi.SearchResponse>(
+    `${API_BASE_URL}/search/${searchText}?type=${filter}&offset=${offset}`,
+  );
+  return searchMapper(data).at(0)?.items ?? [];
+}
+
 export async function addToLibrary(object: LibraryItemPayload) {
   const { data } = await axios.post<LibraryItem>(
     `${API_BASE_URL}/library-items`,

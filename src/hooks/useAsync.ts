@@ -26,6 +26,7 @@ export const useAsync = <T, A extends unknown[]>(
       return asyncFunction(...reSyncArg)
         .then(response => {
           setValue(response);
+          return response;
         })
         .catch(promiseError => {
           setError(instantiateError(promiseError));

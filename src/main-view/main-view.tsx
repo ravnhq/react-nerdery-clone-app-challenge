@@ -19,7 +19,6 @@ const MainDiv = styled.div`
 
 function MainView() {
   const { context } = useEntityContextMenu(true);
-
   const contextMenuRef = useRef<HTMLElement>(null);
 
   const { isLogged } = useAuth();

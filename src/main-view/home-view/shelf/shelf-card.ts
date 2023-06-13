@@ -5,6 +5,7 @@ interface ShelfCardContainerProps {
   columnCount: number;
   minContainerWidth: number;
   columnWidth?: number;
+  expanded?: boolean;
 }
 export const ShelfCardsContainer = styled.div<ShelfCardContainerProps>`
   grid-column-gap: ${props => props.gridGap}px;
@@ -15,7 +16,7 @@ export const ShelfCardsContainer = styled.div<ShelfCardContainerProps>`
   --column-width: ${props => props.columnWidth}px;
 
   grid-auto-flow: row;
-  grid-auto-rows: var(--auto-rows, 0px);
+  grid-auto-rows: ${({ expanded }) => (expanded ? '1fr' : '0px')};
   grid-template-rows: 1fr;
 
   @media (min-width: 1130px) and (max-width: 1300px) {

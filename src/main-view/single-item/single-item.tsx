@@ -40,7 +40,7 @@ export const SingleItemView = () => {
   const { value: entity, pending, error } = useAsync(getEntity, type, id);
 
   if (error) {
-    return <h1>Error: {JSON.stringify(error?.message, null, 2)}</h1>;
+    return <h1>Error: {JSON.stringify(error.message, null, 2)}</h1>;
   }
 
   if (!entity || pending) return <h1>Loading...</h1>;

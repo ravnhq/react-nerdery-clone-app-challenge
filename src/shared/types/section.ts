@@ -5,4 +5,5 @@ export interface Section {
   title: string;
   uri?: string;
   items: SectionItem[];
+  totalItems?: number;
 }
