@@ -78,6 +78,7 @@ export const AuthorizationContextProvider: React.FC<PropsWithChildren> = ({
             .then((res) => {
                 setUser(res.user);
                 localStorage.setItem('access_token', res.accessToken);
+                localStorage.setItem('user', JSON.stringify(res.user));
                 setIsAuth(true);
                 navigate('/?new');
             })
