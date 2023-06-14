@@ -12,7 +12,7 @@ const createInstance = (api: EApiRoutes, options = {}) => {
     const instance = axios.create({
         baseURL:
             api === EApiRoutes.MockApi
-                ? 'http://localhost:3000'
+                ? 'https://mocked-api.onrender.com'
                 : process.env.VITE_SPOTIFY_BASE_URL,
         ...options,
     });

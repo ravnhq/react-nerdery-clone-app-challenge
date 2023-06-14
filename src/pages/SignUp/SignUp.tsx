@@ -2,7 +2,7 @@ import React from 'react';
 import { StyledSignUpContainer } from '../../components/Styles/SignUp/SignUpContainer.styles';
 import { StyledLogo } from '../../components/Styles/SignUp/Logo.styles';
 import { useAuthorizationContext } from '../../context/AuthorizationContext';
-import { SignUpForm } from '../../components/Forms/SignUpForm';
+import SignUpForm from '../../components/Forms/SignUpForm/SignUpForm';
 
 type FormValues = {
     email: string;

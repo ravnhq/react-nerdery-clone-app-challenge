@@ -40,7 +40,7 @@ const Liked = () => {
     }
 
     return (
-        <HomeLayout loading={false}>
+        <HomeLayout>
             <StyledLikePage>
                 <PlaylistDataContainer>
                     <img

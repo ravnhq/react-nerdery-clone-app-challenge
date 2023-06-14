@@ -16,7 +16,7 @@ let likedSongsIds: string[] | null = null;
 const loggedUser = JSON.parse(localStorage.getItem('user')!);
 
 export const fetchLikedTracks = async (userId: number) => {
-    const data: Track[] = await mockedApiInstance.get('/tracks', {
+    const data: Track[] = await mockedApiInstance.get('/660/tracks', {
         params: {
             userId,
             liked: true,
@@ -85,7 +85,7 @@ export const createPlaylist = async (
     description: string;
     userId: number;
 }> => {
-    return mockedApiInstance.post('/playlists', {
+    return mockedApiInstance.post('/640/playlists', {
         userId,
         name: 'New Playlist',
         description: '',
@@ -93,7 +93,7 @@ export const createPlaylist = async (
 };
 
 export const getUserPlaylists = async (userId: number) => {
-    const data: PlaylistInfo[] = await mockedApiInstance.get('/playlists', {
+    const data: PlaylistInfo[] = await mockedApiInstance.get('/640/playlists', {
         params: {
             userId,
         },
@@ -103,7 +103,7 @@ export const getUserPlaylists = async (userId: number) => {
 };
 
 export const getUserPlaylistById = async (id: number) => {
-    const data: PlaylistInfo[] = await mockedApiInstance.get('/playlists', {
+    const data: PlaylistInfo[] = await mockedApiInstance.get('/640/playlists', {
         params: {
             id,
         },
@@ -116,7 +116,7 @@ export const getUserPlaylistById = async (id: number) => {
 
 export const addTrackToPlaylist = async (playlistId: number, track: Track) => {
     const num = Math.floor(1000 + Math.random() * 9000);
-    return mockedApiInstance.post('/tracks', {
+    return mockedApiInstance.post('/660/tracks', {
         playlistId,
         ...track,
         id: track.id + num,
@@ -124,7 +124,7 @@ export const addTrackToPlaylist = async (playlistId: number, track: Track) => {
 };
 
 export const getPlaylistTracks = async (playlistId: number) => {
-    const data: Track[] = await mockedApiInstance.get('/tracks', {
+    const data: Track[] = await mockedApiInstance.get('/660/tracks', {
         params: {
             playlistId,
         },
@@ -138,15 +138,15 @@ export const getPlaylistTracks = async (playlistId: number) => {
 };
 
 export const removeTrackFromPlaylist = async (id: string) => {
-    return mockedApiInstance.delete(`/tracks/${id}`);
+    return mockedApiInstance.delete(`/660/tracks/${id}`);
 };
 
 export const deletePlaylistById = async (id: number) => {
-    mockedApiInstance.delete(`/playlists/${id}`);
+    mockedApiInstance.delete(`/640/playlists/${id}`);
 };
 
 export const editPlaylistInfo = async (form: PlaylistInfo) => {
-    return mockedApiInstance.put(`/playlists/${form.id}`, {
+    return mockedApiInstance.put(`/640/playlists/${form.id}`, {
         ...form,
     });
 };
@@ -294,7 +294,7 @@ export const updateTrackInfo = async (track: Track) => {
 };
 
 export const createTrackInfo = async (track: Track) => {
-    return mockedApiInstance.post('/tracks', {
+    return mockedApiInstance.post('/660/tracks', {
         ...track,
     });
 };
