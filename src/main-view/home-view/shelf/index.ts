@@ -1,0 +1,1 @@
+export { StyledShelf } from './shelf';
